@@ -1,22 +1,16 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-ZSH_THEME="powerlevel10k/powerlevel10k"
+
+ZSH_THEME=""
+
 export ZSH="$HOME/.oh-my-zsh"
-plugins=(git zsh-syntax-highlighting zsh-autosuggestions autoupdate colored-man-pages emoji aliases history-substring-search web-search encode64 emoji-clock battery history zoxide you-should-use)
+plugins=(git zsh-autosuggestions autoupdate colored-man-pages aliases history-substring-search history zoxide you-should-use)
 export UPDATE_ZSH_DAYS=1
 source $ZSH/oh-my-zsh.sh
 
 alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
 alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
-
-source /data/data/com.termux/files/home/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -45,7 +39,7 @@ alias tdoc="cd /storage/emulated/0/Documents/"
 
 alias upd="oma upgrade && oma upgrade -y && oma refresh"           # 一键更新所有包
 alias clean="oma clean && apt autoremove -y && pkg clean && apt clean"       # 清理垃圾
-alias list="pkg list-installed | less"             # 查看已安装包
+alias list="pkg list-installed | bat"             # 查看已安装包
 alias prw='pip-review --local --interactive'
 alias sa="mkdir -p /data/data/com.termux/cache/apt/archives && upd && clean && go clean -modcache && pip cache purge && go clean -cache && prw && pip cache purge"
 sa-t(){
@@ -168,35 +162,19 @@ alias tch="touch"                                       # 创建文件
 alias head="head -n"                                      # 指定行数
 alias tail="tail -n"                                      # 指定行数
 
-# 📝 文本处理
-alias json='python -m json.tool'                          # 格式化JSON
-alias xml='xmllint --format -'                            # 格式化XML
-alias urlencode='python -c "import sys, urllib.parse as p; print(p.quote_plus(sys.argv[1]))"'
-alias urldecode='python -c "import sys, urllib.parse as p; print(p.unquote_plus(sys.argv[1]))"'
-
 # 🐍 Python 快捷
 alias py3="python3"                                       # python3 你得先有py3
 alias py2="python2"                                       # python2 你得先有py2
-alias venv="python3 -m venv"                               # 创建虚拟环境
-alias activate="source venv/bin/activate"                 # 激活虚拟环境
-alias pip-freeze="pip freeze > requirements.txt"          # 导出依赖
-alias pip-install="pip install -r requirements.txt"       # 安装依赖
 alias grep="grep --color=auto"
 alias e='exit' # 快速退出
 
 export PATH=$PATH:$HOME/go/bin
+
+# 默认编辑器
 export EDITOR=nvim
 export VISUAL=nvim
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# p10k配置
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-typeset -g POWERLEVEL9K_EXPERIMENTAL_TIME_REALTIME=true
-
 export PATH=$PATH:$HOME/go/bin
-export tuifi_show_hidden=True
-
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 export PATH="$PYENV_ROOT/bin:$PATH"
 
@@ -263,37 +241,10 @@ export CARAPACE_BRIDGES="zsh,fish,bash,inshellisense"
 zstyle ":completion:*" format " %F{yellow}-- %d --%f"
 zstyle ":completion:*" group-name ""
 zstyle ":completion:*" verbose yes
-autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
+# autoload -Uz compinit && compinit -d ~/.cache/zsh/zcompdump
 source <(carapace _carapace)
 
-
-# zsh-syntax-highlighting 颜色自定义
-ZSH_HIGHLIGHT_STYLES[default]=none
-ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=#f38ba8
-ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=#cba6f7
-ZSH_HIGHLIGHT_STYLES[alias]=fg=#a6e3a1
-ZSH_HIGHLIGHT_STYLES[builtin]=fg=#89b4fa
-ZSH_HIGHLIGHT_STYLES[function]=fg=#94e2d5
-ZSH_HIGHLIGHT_STYLES[command]=fg=#a6e3a1
-ZSH_HIGHLIGHT_STYLES[precommand]=fg=#f9e2af
-ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=#f5c2e7
-ZSH_HIGHLIGHT_STYLES[path]=fg=#cdd6f4,underline
-ZSH_HIGHLIGHT_STYLES[path_prefix]=fg=#cdd6f4,underline
-ZSH_HIGHLIGHT_STYLES[globbing]=fg=#fab387
-ZSH_HIGHLIGHT_STYLES[history-expansion]=fg=#f2cdcd
 export BAT_THEME="Catppuccin Mocha"
-
-# 自定义高亮颜色
-ZSH_HIGHLIGHT_STYLES[command]=fg=#89b4fa
-ZSH_HIGHLIGHT_STYLES[alias]=fg=#89b4fa
-ZSH_HIGHLIGHT_STYLES[builtin]=fg=#89b4fa
-ZSH_HIGHLIGHT_STYLES[function]=fg=#89b4fa
-ZSH_HIGHLIGHT_STYLES[arg0]=fg=#89b4fa
-
-# 管道符 - 青色
-ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=#94e2d5,bold
-# 重定向符 > < 也改成青色
-ZSH_HIGHLIGHT_STYLES[redirection]=fg=#94e2d5,bold
 
 # man 手册彩色显示
 export MANPAGER="less -R --use-color -Dd+r -Du+b"
@@ -311,14 +262,8 @@ alias diff='diff --color=auto'
 alias lu="lua"
 alias luv="lua -v"
 
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main cursor)
-typeset -gA ZSH_HIGHLIGHT_STYLES
-
-ZSH_HIGHLIGHT_STYLES[command]=fg=#cba6f7
-ZSH_HIGHLIGHT_STYLES[alias]=fg=#cba6f7
-ZSH_HIGHLIGHT_STYLES[builtin]=fg=#cba6f7
-ZSH_HIGHLIGHT_STYLES[function]=fg=#cba6f7
-ZSH_HIGHLIGHT_STYLES[arg0]=fg=#cba6f7
+# 设置 tldr 首选语言为中文
+export TLDR_LANGUAGE="zh"
 
 alias vizshrc="vim ~/.zshrc"
 alias vivirc="vim ~/.vimrc"
@@ -335,121 +280,56 @@ export X_CMD_SILENT=1
 eval "$(fzf --zsh)"
 
 alias ffc="fastfetch"
-# FLTERS ==============================================================================
-# echo "======================================================"
-# echo "  ███████╗██╗     ████████╗███████╗██████╗ ███████╗"
-# echo "  ██╔════╝██║     ╚══██╔══╝██╔════╝██╔══██╗██╔════╝"
-# echo "  █████╗  ██║        ██║   █████╗  ██████╔╝███████╗"
-# echo "  ██╔══╝  ██║        ██║   ██╔══╝  ██╔══██╗╚════██║"
-# echo "  ██║     ███████╗   ██║   ███████╗██║  ██║███████║"
-# echo "  ╚═╝     ╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝"
-# echo "                     ███████╗ ██████╗"
-# echo "                     ╚══════╝╚══════╝"
-# echo "                      󰫳 FLT18355"
-# echo "            󰈺  Welcome To My Terminal"
-# echo "  FLTERS: Fast Light Terminal Elegant Reliable System"
-# echo "======================================================"
 # 用户名
 export USER="FLT18355_"
 export HOST="FLTERS_OS"
 PROMPT='%F{magenta}%n@%m%f %~ %# '
 
 # export USER="FLTERS USER"
-alias flt-logo="cat ~/.config/fastfetch/logos/catppuccin.txt | tte --random-effect"
-flt(){ 
-	flt-logo
-	echo "󰫳 FLTERS(CatppuccinOS-Mocha) 一个小工具  26.1(2026.3.28+)" | lolcat --freq=0.8
-	echo "  FLT18355" | lolcat --freq=0.8
-	echo "  Font: UbuntuMono" | lolcat --freq=0.8
-	echo "  Themes: Catppuccin 0.2.0" | lolcat --freq=0.8
-	echo "  --python 3.13.13, fastfetch, tte" | lolcat --freq=0.8
-	echo "  vizshrc 查看配置" | lolcat --freq=0.8
-	cat ~/终端专用文件夹/catppuccin.logo | tte print
-	ffc
-
+flt(){
+  PINK='\033[38;2;245;194;231m'
+  BLUE='\033[38;2;137;180;250m'
+  GREEN='\033[38;2;166;227;161m'
+  YELLOW='\033[38;2;249;226;175m'
+  PURPLE='\033[38;2;203;166;247m'
+  RESET='\033[0m'
+  ~/logo.sh
+  echo "󰫳 ${PURPLE}FLTERS(Fast Light Terminal Elegant Reliable System) 26.2(2026.4.18+)${RESET}"
+	echo "  ${BLUE}一个提前配置好的termux满血版${RESET}"
+  echo "  ${BLUE}作者:FLT18355_${RESET}"
+  echo "  ${BLUE}主要主题:catppuccin-mocha${RESET}"
+  echo "  ${BLUE}命令行主题:oh-my-posh${RESET}"
+  echo "  ${BLUE}终端环境:zsh${RESET}"
+  echo "  ${BLUE}代码编辑器:neovim${RESET}"
+  echo "  ${YELLOW}懒人专属,解决一切配置的问题${RESET}"
+  echo "  ${YELLOW}Hello World!${RESET}"
+  echo "  ${GREEN}在FLTERS创造一切可能!${RESET}"
 }
-alias fzf-b="fzf --preview 'bat --color=always {}'"
-alias fzf-e="fzf --preview 'eza --tree --color=always {}'"
-alias fzf-v="vim \$(fzf)"
-alias syso="sa-t"
+alias fzb="fzf --preview 'bat --color=always {}'"
+alias fze="fzf --preview 'eza --tree --color=always {}'"
+alias fzv="vim \$(fzf)"
+
+flt
+
 # f-weather
-alias f-weather='curl "wttr.in/?lang=zh"'
-alias f-weather-fz='curl "wttr.in/福州?lang=zh"'
-alias f-weather-xm='curl "wttr.in/厦门?lang=zh"'
+alias weather='curl "wttr.in/?lang=zh"'
+alias weather-fz='curl "wttr.in/福州?lang=zh"'
+alias weather-xm='curl "wttr.in/厦门?lang=zh"'
 
 alias glow='glow -s ~/.config/glow/catppuccin-mocha.json'
-
-ipyl(){
-	py ~/终端专用文件夹/ipy_launcher.ipy
-}
-
-flt-meows(){
-	echo "󰄛 Meow 󰄛 " | lolcat --freq=0.8
-	python /data/data/com.termux/files/home/终端专用文件夹/f-tools/catppuccin_cat.py
-}
-
-flt-meows-blue(){
-	echo "󰄛 Meow 󰄛 " | lolcat --freq=0.8
-	python /data/data/com.termux/files/home/终端专用文件夹/f-tools/catppuccin_cat.py -c blue
-}
-
-flt-meows-blue-cute(){
-	echo "󰄛 Meow 󰄛 " | lolcat --freq=0.8
-	python /data/data/com.termux/files/home/终端专用文件夹/f-tools/catppuccin_cat.py -c blue -t cute
-}
-
-flt-meows-cute(){
-	echo "󰄛 Meow 󰄛 " | lolcat --freq=0.8
-	python /data/data/com.termux/files/home/终端专用文件夹/f-tools/catppuccin_cat.py -t cute
-}
-flt-downl(){
-	echo "yt_dlp 26.4" | lolcat --freq=0.8
-	python /data/data/com.termux/files/home/终端专用文件夹/f-tools/yd下载器.py
-}
-flt-icons(){
-	echo ""
-	echo "   zsh 5.9            android            edge" | lolcat --freq=0.8
-	echo "  oh-my-zsh           bash               json" | lolcat --freq=0.8
-	echo "   termux           󰄛  catppuccin        markdown" | lolcat --freq=0.8
-	echo "   vim                github             npm" | lolcat --freq=0.8
-	echo "   python           󰍳  minecraft        󱥰  candy" | lolcat --freq=0.8
-	echo "   node.js            html5&css3      󰫳  FLTERS" | lolcat --freq=0.8
-	echo ""
-}
-# =============================================================================================
-# 错误命令高亮 - 黄绿色（紫色补色）
-ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=#eba0ac
-ZSH_HIGHLIGHT_STYLES[command-not-found]=fg=#eba0ac
-
-# 路径颜色 - 青色（推荐）
-ZSH_HIGHLIGHT_STYLES[path]=fg=#94e2d5,underline
-ZSH_HIGHLIGHT_STYLES[path_prefix]=fg=#94e2d5,underline
-
-# 选项高亮 - 橙色
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=#fab387
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=#fab387
-
-# 操作符高亮 - 青色
-ZSH_HIGHLIGHT_STYLES[commandseparator]=fg=#94e2d5,bold
-ZSH_HIGHLIGHT_STYLES[redirection]=fg=#94e2d5,bold
-
-# tree 紫色主题
-alias tree='tree -C --dirsfirst'
-export TREE_COLORS="di=01;38;2;203;166;247:ex=01;38;2;166;227;161:ln=01;38;2;250;179;135:fi=01;38;2;205;214;244"
-
-# tuifi
-export tuifi_vim_mode=True
 
 # nyancat
 alias ncat='nyancat'
 
 alias tmux='zellij'
 
+alias tldr='tldr -L zh'
 # 让 eza 不使用 LS_COLORS，只读主题文件
 export EZA_COLORS=ignore
 
-alias rust='cargo'
+# 初始化 Oh My Posh（使用 Catppuccin Mocha 主题）
+# 使用 Catppuccin Mocha 主题
+eval "$(oh-my-posh init zsh --config $PREFIX/share/oh-my-posh/themes/mocha.omp.json)"
+source ~/.local/share/zinit/zinit.git/zinit.zsh
 
-# lazygit
-# 使用lazy代替lazygit(更方便)
-alias lazy="lazygit"
+zinit light zdharma-continuum/fast-syntax-highlighting
