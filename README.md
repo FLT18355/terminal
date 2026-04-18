@@ -23,4 +23,4 @@
 | zsh-autocomplete | 智能命令补全 |
 | fast-syntax-highlighting | 实时语法高亮 |
 
-##FLTERS - 让 Termux 更优雅
+❤️FLTERS - 让 Termux 更优雅❤️
