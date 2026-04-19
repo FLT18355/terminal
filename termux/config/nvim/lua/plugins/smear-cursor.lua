@@ -29,6 +29,6 @@ return {
 
     -- 光标颜色（可选，让拖尾颜色固定）
     -- cursor_color = nil,  -- 设为 "#cba6f7" 可以固定成 Catppuccin 紫色
-    cursor_color = "#89b4fa",
+    cursor_color = "#cba6f7",
   },
 }

@@ -269,14 +269,6 @@ alias player='node ~/终端专用文件夹/player.js'
 # 设置 tldr 首选语言为中文
 export TLDR_LANGUAGE="zh"
 
-alias vizshrc="vim ~/.zshrc"
-alias vivirc="vim ~/.vimrc"
-alias vi~="vim ~"
-alias v='vi'
-
-# lf=yazi(awa)
-alias lf='yazi'
-
 # xcmd
 export X_CMD_SILENT=1
 [ ! -f "$HOME/.x-cmd.root/X" ] || . "$HOME/.x-cmd.root/X" # boot up x-cmd.
@@ -322,6 +314,18 @@ alias weather-fz='curl "wttr.in/福州?lang=zh"'
 alias weather-xm='curl "wttr.in/厦门?lang=zh"'
 
 alias glow='glow -s ~/.config/glow/catppuccin-mocha.json'
+
+# 更好的光标
+export KEYTIMEOUT=10
+# 设置光标为闪烁的竖线（插入模式）
+echo -ne '\e[5 q'
+alias ci='echo -ne "\e[5 q"'
+alias v='vi && ci'
+alias vzshrc="vim ~/.zshrc && ci"
+alias lf="yazi && ci"
+
+# git别名
+alias ga.='ga .'
 
 # nyancat
 alias ncat='nyancat'
