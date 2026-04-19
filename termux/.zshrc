@@ -325,9 +325,11 @@ v(){
 }
 alias vzshrc="vim ~/.zshrc && ci"
 alias lf="yazi && ci"
+alias vi='vi && ci'
 
 # git别名
 alias ga.='ga .'
+alias ggap='git gc --aggressive --prune=now'
 
 # nyancat
 alias ncat='nyancat'
