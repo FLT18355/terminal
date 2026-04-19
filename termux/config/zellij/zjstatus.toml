@@ -1,0 +1,15 @@
+[theme]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[[left]]
+type = "session"
+format = " $session_name "
+
+[[left]]
+type = "pane"
+format = "  $pane_index "
+
+[[right]]
+type = "datetime"
+format = " 󰃰 $date  󰥔 $time "
