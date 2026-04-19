@@ -1,0 +1,9 @@
+# Catppuccin Mocha 紫色主题
+
+# 目录颜色
+TREE_COLORS="di=01;38;2;203;166;247:"
+
+# 其他文件类型颜色
+TREE_COLORS="$TREE_COLORS ex=01;38;2;166;227;161:"     # 可执行文件
+TREE_COLORS="$TREE_COLORS ln=01;38;2;250;179;135:"     # 链接
+TREE_COLORS="$TREE_COLORS fi=01;38;2;205;214;244:"     # 普通文件
