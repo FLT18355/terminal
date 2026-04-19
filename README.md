@@ -4,7 +4,6 @@
 
 ## ✨ 特性
 
-- **一键安装**：自动化脚本，几分钟内完成环境配置
 - **美观界面**：采用 Catppuccin 主题，搭配真彩色和光标拖尾特效
 - **高效工具链**：集成 LazyVim、Yazi、Starship/Oh My Posh、fzf、ripgrep 等热门工具
 - **开箱即用**：预置常用别名、Zsh 插件和 Neovim 快捷键
