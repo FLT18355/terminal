@@ -323,6 +323,7 @@ alias ci='echo -ne "\e[5 q"'
 alias v='vi && ci'
 alias vzshrc="vim ~/.zshrc && ci"
 alias lf="yazi && ci"
+alias gc='git commit --verbose'
 alias gc='gc && ci'
 
 # git别名
