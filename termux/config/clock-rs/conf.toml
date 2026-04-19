@@ -1,0 +1,14 @@
+[general]
+color = "blue"
+bold = true
+interval = 200
+blink = true        # 冒号闪烁
+
+[position]
+horizontal = "center"
+vertical = "center"
+
+[date]
+fmt = "%Y-%m-%d %H:%M:%S"
+use_12h = false
+hide_seconds = false
