@@ -320,11 +320,11 @@ export KEYTIMEOUT=10
 # 设置光标为闪烁的竖线（插入模式）
 echo -ne '\e[5 q'
 alias ci='echo -ne "\e[5 q"'
-alias v='vi && ci'
+v(){
+  vi "$1" && ci
+}
 alias vzshrc="vim ~/.zshrc && ci"
 alias lf="yazi && ci"
-alias gc='git commit --verbose'
-alias gc='gc && ci'
 
 # git别名
 alias ga.='ga .'
