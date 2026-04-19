@@ -131,6 +131,7 @@ alias mkdir="mkdir -p"                                 # 自动创建父目录
 alias cp="cp -iv"                                      # 覆盖前提示
 alias mv="mv -iv"                                      # 移动前提示
 alias rm="rm -i"                                       # 删除前提示
+alias rmf='rm –rf'
 alias ln="ln -s"                                       # 创建软链接
 alias backup="cp -r"                                   # 简单备份
 
@@ -262,12 +263,14 @@ alias diff='diff --color=auto'
 alias lu="lua"
 alias luv="lua -v"
 
+alias player='node ~/终端专用文件夹/player.js'
 # 设置 tldr 首选语言为中文
 export TLDR_LANGUAGE="zh"
 
 alias vizshrc="vim ~/.zshrc"
 alias vivirc="vim ~/.vimrc"
 alias vi~="vim ~"
+alias v='vi'
 
 # lf=yazi(awa)
 alias lf='yazi'
