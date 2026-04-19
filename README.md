@@ -1,6 +1,6 @@
-# FLTERS - Termux 配置包
+# FLTERS - Termux 配置
 
-**FLTERS** 是一个专为 Termux 打造的配置包，旨在快速搭建美观、高效的终端开发环境。它整合了 Zsh 插件、Neovim 配置、终端主题和实用别名，让你在 Android 设备上也能拥有 PC 级的开发体验。
+**FLTERS** 是一个专为 Termux 打造的配置，旨在快速搭建美观、高效的终端开发环境。
 
 ## ✨ 特性
 
