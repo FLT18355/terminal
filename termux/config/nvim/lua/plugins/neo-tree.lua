@@ -65,6 +65,12 @@ return {
         bind_to_cwd = false,
         follow_current_file = { enabled = true },
         use_libuv_file_watcher = true,
+				filtered_items = {
+        	visible = false,           -- 设置为 false，不强制隐藏
+        	hide_dotfiles = false,     -- 关键：不隐藏 . 开头的文件
+        	hide_gitignored = false,   -- 可选：是否隐藏 .gitignore 中的文件
+        	-- 其他过滤选项...
+      	},
       },
       window = {
         mappings = {
