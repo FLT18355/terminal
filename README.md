@@ -7,7 +7,6 @@
 - **美观界面**：采用 Catppuccin 主题，搭配真彩色和光标拖尾特效
 - **高效工具链**：集成 LazyVim、Yazi、Starship/Oh My Posh、fzf、ripgrep 等热门工具
 - **开箱即用**：预置常用别名、Zsh 插件和 Neovim 快捷键
-- **轻量快速**：优化配置加载顺序，启动速度极快
 
 ## 📦 包含组件
 
@@ -23,3 +22,5 @@
 | fast-syntax-highlighting | 实时语法高亮 |
 
 ❤️FLTERS - 让 Termux 更优雅❤️
+
+(注意,这只是一个配置文件仓库)
