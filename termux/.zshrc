@@ -1,3 +1,4 @@
+
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -25,7 +26,8 @@ alias clock='clock-rs | lolcat'
 # alias lf='ranger'
 
 # 常用
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh --cmd j)"
 alias tp="cd ~/终端专用文件夹"
 alias td="cd /storage/emulated/0/Download/"
 alias th='cd ~ && echo "󰄛 好像又回到家了 󰄛" | lolcat'
@@ -336,3 +338,4 @@ eval "$(oh-my-posh init zsh --config $PREFIX/share/oh-my-posh/themes/mocha.omp.j
 source ~/.local/share/zinit/zinit.git/zinit.zsh
 
 zinit light zdharma-continuum/fast-syntax-highlighting
+
