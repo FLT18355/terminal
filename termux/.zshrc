@@ -292,14 +292,14 @@ flt(){
   RESET='\033[0m'
   ~/logo.sh
   echo "󰫳 ${PURPLE}FLTERS(Fast Light Terminal Elegant Reliable System) 26.2(2026.4.18+)${RESET}"
-	echo "  ${BLUE}一个提前配置好的termux满血版${RESET}"
-  echo "  ${BLUE}作者:FLT18355_${RESET}"
+	echo "  ${BLUE}一个termux满血版${RESET}"
+  echo "  ${BLUE}主人:FLT18355_${RESET}"
   echo "  ${BLUE}主要主题:catppuccin-mocha${RESET}"
   echo "  ${BLUE}命令行主题:oh-my-posh${RESET}"
   echo "  ${BLUE}终端环境:zsh${RESET}"
   echo "  ${BLUE}代码编辑器:neovim${RESET}"
-  echo "  ${YELLOW}懒人专属,解决一切配置的问题${RESET}"
-  echo "  ${YELLOW}Hello World!${RESET}"
+  echo "  ${YELLOW}FLT18355专属${RESET}"
+  echo "  ${YELLOW}欢迎主人!${RESET}"
   echo "  ${GREEN}在FLTERS创造一切可能!${RESET}"
 }
 alias fzb="fzf --preview 'bat --color=always {}'"
