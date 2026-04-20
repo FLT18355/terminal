@@ -1,6 +1,0 @@
-// 基础配置
-theme "catppuccin-mocha"
-mouse_mode true
-simplified_ui true
-
-// 快捷键保持默认
