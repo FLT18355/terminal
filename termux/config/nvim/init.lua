@@ -14,6 +14,6 @@ end, { desc = "Toggle paste mode" })
 require("mason-lspconfig").setup({
   ensure_installed = {}, -- 清空自动安装列表
 })
-
+-- catppuccin
 vim.cmd.colorscheme("catppuccin")
 
