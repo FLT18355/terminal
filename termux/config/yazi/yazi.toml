@@ -13,4 +13,3 @@ wrap = "yes"
 image_filter = "lanczos3"
 [tasks]
   image_alloc      = 1073741824        # = 1024*1024*1024 = 1024MB
-
