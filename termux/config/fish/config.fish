@@ -169,21 +169,23 @@ set -gx FZF_DEFAULT_OPTS "\
 --bind='?:toggle-preview' \
 --bind='alt-up:preview-page-up' \
 --bind='alt-down:preview-page-down' \
---color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8:underline \
---color=fg:#CDD6F4,header:#F38BA8:bold,info:#CBA6F7,pointer:#F5E0DC \
---color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8:reverse \
+--color=bg+:#1E1E2E,bg:#2A2A3E,spinner:#F9E2AF,hl:#F38BA8:underline \
+--color=fg:#94E2D5,header:#F38BA8:bold,info:#CBA6F7,pointer:#F9E2AF \
+--color=marker:#B4BEFE,fg+:#89B4FA,prompt:#CBA6F7,hl+:#F38BA8:reverse \
 --color=selected-bg:#45475A \
---color=border:#6C7086,label:#CDD6F4 \
+--color=border:#CBA6F7,label:#CDD6F4 \
 --color=query:#CDD6F4 \
 --color=disabled:#585B70 \
---color=preview-bg:#1E1E2E \
+--color=preview-bg:#2A2A3E \
 --color=preview-border:#6C7086 \
 --color=preview-label:#89B4FA:bold \
---color=list-fg:#CDD6F4 \
---color=list-bg:#1E1E2E \
---color=selected-fg:#CDD6F4 \
+--color=list-fg:#94E2D5 \
+--color=list-bg:#2A2A3E \
+--color=selected-fg:#94E2D5 \
 --color=scrollbar:#6C7086 \
 --color=separator:#6C7086"
+
+set -gx FZF_CTRL_T_OPTS "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
 # 历史配置 (Fish 用环境变量)
 set -gx HISTFILE ~/.local/share/fish/fish_history
