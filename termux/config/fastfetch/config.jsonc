@@ -91,18 +91,6 @@
             "keyColor": "yellow"
         },
         {
-            "type": "localip",
-            "key": "│ ├󰩟  Localip",
-            "keyColor": "yellow",
-            // "showIpv6": true,
-            // "showMac": true,
-            // "showSpeed": true,
-            // "showMtu": true,
-            // "showLoop": true,
-            // "showFlags": true,
-            // "showAllIps": true
-        },
-        {
             "type": "command",
             "key": "│ ├  OS Age",
             "keyColor": "yellow",
@@ -151,12 +139,6 @@
             "key": "│ ├  Node.js Version",
             "keyColor": "blue",
             "text": "node --version"
-        },
-				{
-            "type": "weather",
-            "key": "│ ├󰖐  Weather",
-            "keyColor": "blue",
-            "timeout": 1000
         },
         {
             "type": "terminaltheme",

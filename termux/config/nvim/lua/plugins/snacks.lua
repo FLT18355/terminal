@@ -34,6 +34,9 @@ return {
           hidden = true,      -- 改为 true 即可[citation:4]
           -- 可选：也显示 git 忽略的文件
           -- ignored = true,
+        },
+        files = {
+          hidden = true,   --显示隐藏文件
         }
       }
     }
