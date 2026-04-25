@@ -135,6 +135,8 @@ abbr --add gc "git commit"
 abbr --add gd "git diff"
 abbr --add g git
 abbr --add cl "clear && echo '󰄛 打扫干净啦！'"
+abbr --add tma "am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity"
+abbr --add gga "git gc --aggressive"
 
 # --------------------------------------------
 # 环境变量 (set -gx)
@@ -230,14 +232,16 @@ zoxide init fish | source
 fzf --fish | source
 
 # Oh My Posh 主题
-# oh-my-posh init fish --config $PREFIX/share/oh-my-posh/themes/mocha.omp.json | source
+oh-my-posh init fish --config $PREFIX/share/oh-my-posh/themes/poshcat.omp.json | source
+# atuin
+atuin init fish | source
 
 # --------------------------------------------
 # 函数 (Functions)
 # --------------------------------------------
 
 # sa-t 函数
-function sa-t
+function sa
     echo 系统优化中 | lolcat
     echo "正在创建配置目录..." | lolcat
     mkdir -p /data/data/com.termux/cache/apt/archives
@@ -270,34 +274,16 @@ function sa-t
     echo "所有执行程序都运行完毕,感谢您的使用,Bye" | lolcat
 end
 
-# flt 函数 (启动画面)
-# function flt
-#     echo " "
-#     if test -x ~/logo.sh
-#         ~/logo.sh
-#     end
-#
-#     # 使用 set_color 自动处理颜色
-#     set_color -o 849eef # PURPLE
-#     echo "󰫳 FLTERS(Fast Light Terminal Elegant Reliable System) 26.2a(2026.4.22+)"
-#
-#     set_color 55e0f8 # BLUE
-#     echo "  一个 termux 满血版"
-#     echo "  主人: FLT18355_"
-#     echo "  主要主题: catppuccin-mocha"
-#     echo "  命令行主题: oh-my-posh"
-#     echo "  终端环境: fish"
-#     echo "  代码编辑器: neovim"
-#
-#     set_color ffe02b # YELLOW
-#     echo "  FLT18355 专属"
-#     echo "  欢迎主人!"
-#
-#     set_color 8cc540 # GREEN
-#     echo "  在 FLTERS 创造一切可能!"
-#
-#     set_color normal # 恢复默认颜色
-# end
+# Yazi 包装函数：退出时自动切换到浏览的目录
+function y
+    set -l tmp (mktemp -t "yazi-cwd.XXXXXX")
+    yazi $argv --cwd-file=$tmp
+    set -l cwd (cat $tmp)
+    if test -n "$cwd" && test "$cwd" != "$PWD"
+        builtin cd $cwd
+    end
+    rm -f $tmp
+end
 
 # v 函数 (打开 vim)
 function v
@@ -324,16 +310,13 @@ end
 # --------------------------------------------
 # 启动画面(欢迎语)[启动运行]
 # --------------------------------------------
-# flt
-fish_logo
-set_color 55e0f8
-fish --version
-set_color normal
+
+echo ""
+~/logo.sh
+
 # --------------------------------------------
 # 提示符 (Prompt)
 # --------------------------------------------
-starship init fish | source
-enable_transience
 
 # --------------------------------------------
 # 主题
