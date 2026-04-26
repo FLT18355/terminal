@@ -123,6 +123,7 @@ alias gc='git commit'
 alias gd='git diff'
 alias ga.='git add .'
 alias ggap='git gc --aggressive --prune=now'
+alias yt-dlp='yt-dlp --cookies ~/终端专用文件夹/cookies.txt'
 
 # --------------------------------------------
 # 缩写 (Abbreviations - Fish 特色)
@@ -257,6 +258,7 @@ function sa
     pip cache purge
     go clean -cache
     rm -rf ~/.cargo/registry
+    sqlite3 ~/.local/share/atuin/history.db "PRAGMA wal_checkpoint(TRUNCATE);"
     echo "是否要运行 pip-review 更新 Python 包？" | lolcat
     echo "1) 继续运行" | lolcat
     echo "2) 跳过" | lolcat
@@ -315,6 +317,7 @@ end
 
 echo ""
 ~/logo.sh
+am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity # 每次启动的时候启动termux:api
 
 # --------------------------------------------
 # 提示符 (Prompt)
