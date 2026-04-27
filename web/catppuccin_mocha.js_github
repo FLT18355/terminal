@@ -1,0 +1,745 @@
+// ==UserScript==
+// @name         GitHub Catppuccin (Full)
+// @namespace    https://github.com/catppuccin/userstyles
+// @version      2026.02.17
+// @description  Soothing pastel theme for GitHub - Complete
+// @author       Catppuccin
+// @license      MIT
+// @match        *://github.com/*
+// @match        *://gist.github.com/*
+// @match        *://docs.github.com/*
+// @match        *://viewscreen.githubusercontent.com/*
+// @grant        GM_addStyle
+// @run-at       document-start
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // ============================================================
+    // Catppuccin Mocha 完整配色
+    // ============================================================
+    const colors = {
+        rosewater: "#f5e0dc", flamingo:  "#f2cdcd",
+        pink:      "#f5c2e7", mauve:     "#cba6f7",
+        red:       "#f38ba8", maroon:    "#eba0ac",
+        peach:     "#fab387", yellow:    "#f9e2af",
+        green:     "#a6e3a1", teal:      "#94e2d5",
+        blue:      "#89b4fa", sapphire:  "#74c7ec",
+        sky:       "#89dceb", lavender:  "#b4befe",
+        text:      "#cdd6f4", subtext1:  "#bac2de",
+        subtext0:  "#a6adc8", overlay2:  "#9399b2",
+        overlay1:  "#7f849c", overlay0:  "#6c7086",
+        surface2:  "#585b70", surface1:  "#45475a",
+        surface0:  "#313244", base:      "#1e1e2e",
+        mantle:    "#181825", crust:     "#11111b"
+    };
+    const accent = colors.mauve;
+    const flavor = "mocha";  // mocha
+
+    // 辅助函数
+    function fade(hex, percent) {
+        const r = parseInt(hex.slice(1,3), 16);
+        const g = parseInt(hex.slice(3,5), 16);
+        const b = parseInt(hex.slice(5,7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${percent/100})`;
+    }
+    function lighten(hex, percent) {
+        const r = Math.min(255, parseInt(hex.slice(1,3),16) + Math.round(2.55 * percent));
+        const g = Math.min(255, parseInt(hex.slice(3,5),16) + Math.round(2.55 * percent));
+        const b = Math.min(255, parseInt(hex.slice(5,7),16) + Math.round(2.55 * percent));
+        return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+    function darken(hex, percent) {
+        const r = Math.max(0, parseInt(hex.slice(1,3),16) - Math.round(2.55 * percent));
+        const g = Math.max(0, parseInt(hex.slice(3,5),16) - Math.round(2.55 * percent));
+        const b = Math.max(0, parseInt(hex.slice(5,7),16) - Math.round(2.55 * percent));
+        return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+    }
+
+    // ============================================================
+    // 完整 CSS
+    // ============================================================
+    let css = `:root {
+        --accent: ${accent};
+        --rosewater: ${colors.rosewater};
+        --flamingo: ${colors.flamingo};
+        --pink: ${colors.pink};
+        --mauve: ${colors.mauve};
+        --red: ${colors.red};
+        --maroon: ${colors.maroon};
+        --peach: ${colors.peach};
+        --yellow: ${colors.yellow};
+        --green: ${colors.green};
+        --teal: ${colors.teal};
+        --blue: ${colors.blue};
+        --sapphire: ${colors.sapphire};
+        --sky: ${colors.sky};
+        --lavender: ${colors.lavender};
+        --text: ${colors.text};
+        --subtext1: ${colors.subtext1};
+        --subtext0: ${colors.subtext0};
+        --overlay2: ${colors.overlay2};
+        --overlay1: ${colors.overlay1};
+        --overlay0: ${colors.overlay0};
+        --surface2: ${colors.surface2};
+        --surface1: ${colors.surface1};
+        --surface0: ${colors.surface0};
+        --base: ${colors.base};
+        --mantle: ${colors.mantle};
+        --crust: ${colors.crust};
+    }
+    body, html { color: ${colors.text}; background-color: ${colors.base}; }
+    accent-color: var(--accent);
+    color: ${colors.text};
+    .cm-placeholder { color: ${colors.subtext0}; }
+    --color-social-reaction-bg-reacted-hover: ${fade(accent, 30)};
+    --color-notifications-button-hover-bg: ${fade(accent, 60)};
+    --color-workflow-card-header-shadow: rgba(27,31,35,0.04);
+    --color-icon-directory: var(--fgColor-muted, var(--color-fg-muted));
+    --color-calendar-halloween-graph-day-L1-bg: ${fade(accent, 40)} !important;
+    --color-calendar-halloween-graph-day-L2-bg: ${fade(accent, 60)} !important;
+    --color-calendar-halloween-graph-day-L3-bg: ${fade(accent, 80)} !important;
+    --color-calendar-halloween-graph-day-L4-bg: var(--accent) !important;
+    --color-calendar-winter-graph-day-L1-bg: ${fade(accent, 40)} !important;
+    --color-calendar-winter-graph-day-L2-bg: ${fade(accent, 60)} !important;
+    --color-calendar-winter-graph-day-L3-bg: ${fade(accent, 80)} !important;
+    --color-calendar-winter-graph-day-L4-bg: var(--accent) !important;
+    --color-calendar-graph-day-bg: ${colors.surface0} !important;
+    --color-calendar-graph-day-border: transparent !important;
+    --color-calendar-graph-day-L1-bg: ${fade(accent, 40)} !important;
+    --color-calendar-graph-day-L2-bg: ${fade(accent, 60)} !important;
+    --color-calendar-graph-day-L3-bg: ${fade(accent, 80)} !important;
+    --color-calendar-graph-day-L4-bg: var(--accent) !important;
+    --color-calendar-graph-day-L2-border: transparent !important;
+    --color-calendar-graph-day-L3-border: transparent !important;
+    --color-calendar-graph-day-L4-border: transparent !important;
+    --contribution-default-bgColor-0: ${fade(accent, 10)} !important;
+    --contribution-default-bgColor-1: ${fade(accent, 40)} !important;
+    --contribution-default-bgColor-2: ${fade(accent, 60)} !important;
+    --contribution-default-bgColor-3: ${fade(accent, 80)} !important;
+    --contribution-default-bgColor-4: var(--accent) !important;
+    --color-user-mention-fg: var(--accent);
+    --color-user-mention-bg: ${fade(accent, 30)};
+    --color-dashboard-feed-bg: var(--color-scale-gray-9);
+    --color-mktg-btn-shadow-outline: rgba(255,255,255,0.25) 0 0 0 1px inset;
+    --color-marketing-icon-secondary: var(--color-scale-blue-5);
+    --color-project-header-bg: var(--color-scale-gray-9);
+    --color-project-sidebar-bg: var(--color-scale-gray-8);
+    --color-project-gradient-in: var(--color-scale-gray-8);
+    --color-project-gradient-out: rgba(22,27,34,0);
+    --color-diff-blob-selected-line-highlight-mix-blend-mode: screen;
+    --topicTag-borderColor: #0000;
+    --highlight-neutral-bgColor: ${fade(colors.yellow, 30)};
+    --page-header-bgColor: ${colors.crust};
+    --diffBlob-additionNum-bgColor: ${fade(colors.green, 30)};
+    --diffBlob-additionNum-fgColor: ${colors.text};
+    --diffBlob-additionLine-bgColor: ${fade(colors.green, 15)};
+    --diffBlob-additionWord-bgColor: ${fade(colors.green, 30)};
+    --diffBlob-additionWord-fgColor: ${colors.text};
+    --diffBlob-deletionNum-bgColor: ${fade(colors.red, 30)};
+    --diffBlob-deletionNum-fgColor: ${colors.text};
+    --diffBlob-deletionLine-bgColor: ${fade(colors.red, 15)};
+    --diffBlob-deletionWord-bgColor: ${fade(colors.red, 30)};
+    --diffBlob-deletionWord-fgColor: ${colors.text};
+    --diffBlob-hunkNum-bgColor-rest: ${fade(accent, 40)};
+    --diffBlob-hunkNum-bgColor-hover: ${fade(accent, 75)};
+    --diffBlob-hunkLine-bgColor: ${fade(accent, 25)};
+    --diffBlob-expander-iconColor: ${colors.subtext0};
+    --diffBlob-emptyNum-bgColor: ${colors.mantle};
+    --diffBlob-emptyLine-bgColor: ${colors.mantle};
+    --codeMirror-fgColor: ${colors.text};
+    --codeMirror-bgColor: ${colors.base};
+    --codeMirror-gutters-bgColor: ${colors.base};
+    --codeMirror-gutterMarker-fgColor-default: ${colors.base};
+    --codeMirror-gutterMarker-fgColor-muted: ${colors.overlay0};
+    --codeMirror-lineNumber-fgColor: ${colors.overlay1};
+    --codeMirror-cursor-fgColor: ${colors.text};
+    --codeMirror-selection-bgColor: #388bfd66;
+    --codeMirror-activeline-bgColor: #6e768166;
+    --codeMirror-matchingBracket-fgColor: ${colors.text};
+    --codeMirror-lines-bgColor: ${colors.base};
+    --codeMirror-syntax-fgColor-comment: ${colors.overlay2};
+    --codeMirror-syntax-fgColor-constant: ${colors.blue};
+    --codeMirror-syntax-fgColor-entity: ${colors.blue};
+    --codeMirror-syntax-fgColor-keyword: ${colors.mauve};
+    --codeMirror-syntax-fgColor-storage: ${colors.peach};
+    --codeMirror-syntax-fgColor-string: ${colors.green};
+    --codeMirror-syntax-fgColor-support: #79c0ff;
+    --codeMirror-syntax-fgColor-variable: ${colors.peach};
+    --header-fgColor-default: ${colors.text};
+    --header-fgColor-logo: ${colors.text};
+    --header-bgColor: ${colors.crust};
+    --header-borderColor-divider: #8b949e;
+    --headerSearch-bgColor: ${colors.mantle};
+    --headerSearch-borderColor: ${colors.surface0};
+    --avatar-bgColor: ${fade(colors.text, 26)};
+    --avatar-borderColor: ${colors.surface0};
+    --avatar-shadow: 0px 0px 0px 2px #0d1117;
+    --avatarStack-fade-bgColor-default: ${colors.surface1};
+    --avatarStack-fade-bgColor-muted: #21262d;
+    --control-bgColor-rest: ${colors.red};
+    --control-bgColor-hover: #292e36;
+    --control-bgColor-active: ${colors.surface1};
+    --control-bgColor-disabled: ${fade(colors.mantle, 60)};
+    --control-bgColor-selected: #161b22;
+    --control-fgColor-rest: ${colors.text};
+    --control-fgColor-placeholder: #484f58;
+    --control-fgColor-disabled: ${fade(colors.subtext0, 70)};
+    --control-borderColor-rest: ${colors.surface1};
+    --control-borderColor-emphasis: #666e79;
+    --control-borderColor-disabled: ${fade(colors.surface1, 75)};
+    --control-borderColor-selected: #f0f6fc;
+    --control-borderColor-success: ${colors.green};
+    --control-borderColor-danger: ${colors.red};
+    --control-borderColor-warning: ${colors.yellow};
+    --control-iconColor-rest: #848d97;
+    --control-transparent-bgColor-rest: #0000;
+    --control-transparent-bgColor-hover: ${fade(colors.surface2, 20)};
+    --control-transparent-bgColor-active: ${fade(colors.overlay0, 50)};
+    --control-transparent-bgColor-disabled: #21262db3;
+    --control-transparent-bgColor-selected: #b1bac414;
+    --control-transparent-borderColor-rest: #0000;
+    --control-transparent-borderColor-hover: #0000;
+    --control-transparent-borderColor-active: #0000;
+    --control-danger-fgColor-rest: ${colors.red};
+    --control-danger-fgColor-hover: ${colors.crust};
+    --control-danger-bgColor-hover: ${fade(colors.red, 80)};
+    --control-danger-bgColor-active: ${colors.red};
+    --control-checked-bgColor-rest: var(--accent);
+    --control-checked-bgColor-hover: ${lighten(accent, 5)};
+    --control-checked-bgColor-active: ${lighten(accent, 5)};
+    --control-checked-bgColor-disabled: #6e7681;
+    --control-checked-fgColor-rest: ${colors.crust};
+    --control-checked-fgColor-disabled: #010409;
+    --control-checked-borderColor-rest: var(--accent);
+    --control-checked-borderColor-hover: var(--accent);
+    --control-checked-borderColor-active: var(--accent);
+    --control-checked-borderColor-disabled: ${colors.surface0};
+    --controlTrack-bgColor-rest: ${colors.surface0};
+    --controlTrack-bgColor-hover: ${colors.surface1};
+    --controlTrack-bgColor-active: ${colors.surface2};
+    --controlTrack-bgColor-disabled: #6e7681;
+    --controlTrack-fgColor-rest: #848d97;
+    --controlTrack-fgColor-disabled: ${colors.text};
+    --controlTrack-borderColor-rest: #0000;
+    --controlTrack-borderColor-disabled: #6e7681;
+    --controlKnob-bgColor-rest: ${colors.base};
+    --controlKnob-bgColor-disabled: #21262db3;
+    --controlKnob-bgColor-checked: ${colors.text};
+    --controlKnob-borderColor-rest: ${colors.surface2};
+    --controlKnob-borderColor-disabled: #21262db3;
+    --controlKnob-borderColor-checked: ${colors.blue};
+    --button-default-fgColor-rest: ${colors.text};
+    --button-default-bgColor-rest: ${colors.surface0};
+    --button-default-bgColor-hover: ${colors.surface1};
+    --button-default-bgColor-active: ${colors.surface2};
+    --button-default-bgColor-selected: ${colors.surface2};
+    --button-default-bgColor-disabled: ${fade(colors.surface0, 70)};
+    --button-default-borderColor-rest: ${colors.surface1};
+    --button-default-borderColor-hover: ${colors.surface1};
+    --button-default-borderColor-active: ${colors.surface1};
+    --button-default-borderColor-disabled: ${fade(colors.surface0, 70)};
+    --button-default-shadow-resting: 0px 0px 0px 0px #000;
+    --button-primary-fgColor-rest: ${colors.base};
+    --button-primary-fgColor-disabled: ${fade(colors.base, 60)};
+    --button-primary-iconColor-rest: ${colors.base};
+    --button-primary-bgColor-rest: ${colors.green};
+    --button-primary-bgColor-hover: ${lighten(colors.green, 5)};
+    --button-primary-bgColor-active: ${darken(colors.green, 5)};
+    --button-primary-bgColor-disabled: ${fade(colors.green, 70)};
+    --button-primary-borderColor-rest: ${colors.green};
+    --button-primary-borderColor-hover: ${colors.green};
+    --button-primary-borderColor-active: ${colors.green};
+    --button-primary-borderColor-disabled: ${fade(colors.green, 70)};
+    --button-primary-shadow-selected: 0px 0px 0px 0px #000;
+    --button-invisible-fgColor-rest: ${colors.text};
+    --button-invisible-fgColor-hover: ${lighten(accent, 10)};
+    --button-invisible-fgColor-disabled: #6e7681;
+    --button-invisible-iconColor-rest: ${colors.overlay2};
+    --button-invisible-iconColor-hover: #e6edf3;
+    --button-invisible-iconColor-disabled: #6e7681;
+    --button-invisible-bgColor-rest: #0000;
+    --button-invisible-bgColor-hover: #b1bac41f;
+    --button-invisible-bgColor-active: #b1bac433;
+    --button-invisible-bgColor-disabled: ${fade(colors.surface1, 70)};
+    --button-invisible-borderColor-rest: #0000;
+    --button-invisible-borderColor-hover: #0000;
+    --button-invisible-borderColor-disabled: ${fade(colors.surface1, 70)};
+    --button-outline-fgColor-rest: #388bfd;
+    --button-outline-fgColor-hover: #58a6ff;
+    --button-outline-fgColor-active: ${colors.text};
+    --button-outline-fgColor-disabled: #4493f880;
+    --button-outline-bgColor-rest: #f0f6fc;
+    --button-outline-bgColor-hover: ${colors.surface1};
+    --button-outline-bgColor-active: #0d419d;
+    --button-outline-bgColor-disabled: #0d1117;
+    --button-outline-borderColor-hover: #f0f6fc1a;
+    --button-outline-borderColor-selected: #f0f6fc1a;
+    --button-outline-shadow-selected: 0px 0px 0px 0px #000;
+    --button-danger-fgColor-rest: ${colors.red};
+    --button-danger-fgColor-hover: ${colors.base};
+    --button-danger-fgColor-active: ${colors.base};
+    --button-danger-fgColor-disabled: ${fade(colors.red, 50)};
+    --button-danger-iconColor-rest: ${colors.red};
+    --button-danger-iconColor-hover: ${colors.crust};
+    --button-danger-bgColor-rest: ${colors.surface0};
+    --button-danger-bgColor-hover: ${colors.red};
+    --button-danger-bgColor-active: ${darken(colors.red, 5)};
+    --button-danger-bgColor-disabled: ${colors.base};
+    --button-danger-borderColor-rest: ${colors.surface1};
+    --button-danger-borderColor-hover: ${colors.red};
+    --button-danger-borderColor-active: ${darken(colors.red, 5)};
+    --button-danger-shadow-selected: 0px 0px 0px 0px #000;
+    --button-inactive-fgColor: #8b949e;
+    --button-inactive-bgColor: #21262d;
+    --button-star-iconColor: ${colors.yellow};
+    --buttonCounter-default-bgColor-rest: ${colors.surface1};
+    --buttonCounter-invisible-bgColor-rest: ${colors.surface1};
+    --buttonCounter-primary-bgColor-rest: #04260f33;
+    --buttonCounter-outline-bgColor-rest: #051d4d33;
+    --buttonCounter-outline-bgColor-hover: #051d4d33;
+    --buttonCounter-outline-bgColor-disabled: #1f6feb0d;
+    --buttonCounter-outline-fgColor-rest: #388bfd;
+    --buttonCounter-outline-fgColor-hover: #58a6ff;
+    --buttonCounter-outline-fgColor-disabled: #4493f880;
+    --buttonCounter-danger-bgColor-hover: ${fade(colors.text, 20)};
+    --buttonCounter-danger-bgColor-disabled: #da36330d;
+    --buttonCounter-danger-bgColor-rest: #49020233;
+    --buttonCounter-danger-fgColor-rest: ${colors.red};
+    --buttonCounter-danger-fgColor-hover: ${colors.text};
+    --buttonCounter-danger-fgColor-disabled: ${fade(colors.red, 50)};
+    --focus-outlineColor: var(--accent);
+    --menu-bgColor-active: ${colors.mantle};
+    --overlay-bgColor: ${colors.base};
+    --overlay-borderColor: ${colors.surface0};
+    --overlay-backdrop-bgColor: #161b2266;
+    --selectMenu-borderColor: #484f58;
+    --selectMenu-bgColor-active: #0c2d6b;
+    --sideNav-bgColor-selected: #21262d;
+    --skeletonLoader-bgColor: #161b22;
+    --timelineBadge-bgColor: ${colors.mantle};
+    --treeViewItem-leadingVisual-iconColor-rest: ${colors.subtext0};
+    --underlineNav-borderColor-active: var(--accent);
+    --underlineNav-borderColor-hover: #6e768166;
+    --underlineNav-iconColor-rest: #848d97;
+    --selection-bgColor: ${fade(accent, 30)};
+    --reactionButton-selected-bgColor-rest: ${fade(accent, 20)};
+    --reactionButton-selected-bgColor-hover: ${fade(accent, 35)};
+    --reactionButton-selected-fgColor-rest: var(--accent);
+    --reactionButton-selected-fgColor-hover: var(--accent);
+    --fgColor-default: ${colors.text};
+    --fgColor-muted: ${colors.subtext1};
+    --fgColor-onEmphasis: ${colors.base};
+    --fgColor-white: ${colors.text};
+    --fgColor-disabled: ${colors.surface2};
+    --fgColor-link: var(--accent);
+    --fgColor-neutral: ${colors.subtext1};
+    --fgColor-accent: var(--accent);
+    --fgColor-success: ${colors.green};
+    --fgColor-attention: ${colors.yellow};
+    --fgColor-severe: ${colors.peach};
+    --fgColor-danger: ${colors.red};
+    --fgColor-open: ${colors.green};
+    --fgColor-closed: ${colors.red};
+    --fgColor-done: ${colors.mauve};
+    --fgColor-sponsors: ${colors.pink};
+    --bgColor-default: ${colors.base};
+    --bgColor-muted: ${colors.mantle};
+    --bgColor-inset: ${colors.crust};
+    --bgColor-emphasis: ${colors.overlay2};
+    --bgColor-inverse: ${colors.text};
+    --bgColor-disabled: #21262db3;
+    --bgColor-transparent: #0000;
+    --bgColor-neutral-muted: ${fade(colors.surface0, 40)};
+    --bgColor-neutral-emphasis: ${colors.subtext0};
+    --bgColor-accent-muted: ${fade(accent, 20)};
+    --bgColor-accent-emphasis: var(--accent);
+    --bgColor-success-muted: #2ea04326;
+    --bgColor-success-emphasis: ${colors.green};
+    --bgColor-attention-muted: ${fade(colors.yellow, 15)};
+    --bgColor-attention-emphasis: ${colors.yellow};
+    --bgColor-severe-muted: ${fade(colors.peach, 26)};
+    --bgColor-severe-emphasis: ${colors.peach};
+    --bgColor-danger-muted: ${fade(colors.red, 26)};
+    --bgColor-danger-emphasis: ${colors.red};
+    --bgColor-open-muted: #2ea0431a;
+    --bgColor-open-emphasis: ${colors.green};
+    --bgColor-closed-muted: ${fade(colors.red, 15)};
+    --bgColor-closed-emphasis: ${colors.red};
+    --bgColor-done-muted: #a371f726;
+    --bgColor-done-emphasis: ${colors.mauve};
+    --bgColor-sponsors-muted: #db61a21a;
+    --bgColor-sponsors-emphasis: ${colors.pink};
+    --borderColor-default: ${colors.surface1};
+    --borderColor-muted: ${colors.surface0};
+    --borderColor-emphasis: #484f58;
+    --borderColor-disabled: #21262db3;
+    --borderColor-transparent: #0000;
+    --borderColor-neutral-muted: #6e768166;
+    --borderColor-neutral-emphasis: #6e7681;
+    --borderColor-accent-muted: ${fade(accent, 50)};
+    --borderColor-accent-emphasis: var(--accent);
+    --borderColor-success-muted: ${darken(colors.green, 5)};
+    --borderColor-success-emphasis: ${colors.green};
+    --borderColor-attention-muted: ${fade(colors.flamingo, 30)};
+    --borderColor-attention-emphasis: ${colors.flamingo};
+    --borderColor-severe-muted: ${colors.peach};
+    --borderColor-severe-emphasis: #bd561d;
+    --borderColor-danger-muted: ${colors.red};
+    --borderColor-danger-emphasis: ${colors.red};
+    --borderColor-open-muted: ${darken(colors.green, 5)};
+    --borderColor-open-emphasis: ${colors.green};
+    --borderColor-closed-muted: ${colors.red};
+    --borderColor-closed-emphasis: ${colors.red};
+    --borderColor-done-muted: ${colors.lavender};
+    --borderColor-done-emphasis: ${colors.mauve};
+    --borderColor-sponsors-muted: #db61a266;
+    --borderColor-sponsors-emphasis: ${colors.pink};
+`;
+
+    // 颜色系统
+    if (flavor !== 'latte') {
+        css += `
+    --color-ansi-black: ${colors.surface1};
+    --color-ansi-black-bright: ${colors.surface2};
+    --color-ansi-gray: ${colors.surface2};
+    --color-ansi-white: ${colors.subtext1};
+    --color-ansi-white-bright: ${colors.subtext0};
+`;
+    } else {
+        css += `
+    --color-ansi-black: ${colors.subtext1};
+    --color-ansi-black-bright: ${colors.subtext0};
+    --color-ansi-gray: ${colors.subtext0};
+    --color-ansi-white: ${colors.surface2};
+    --color-ansi-white-bright: ${colors.surface1};
+`;
+    }
+    css += `
+    --color-ansi-red: ${colors.red};
+    --color-ansi-red-bright: ${colors.red};
+    --color-ansi-green: ${colors.green};
+    --color-ansi-green-bright: ${colors.green};
+    --color-ansi-yellow: ${colors.yellow};
+    --color-ansi-yellow-bright: ${colors.yellow};
+    --color-ansi-blue: ${colors.blue};
+    --color-ansi-blue-bright: ${colors.blue};
+    --color-ansi-magenta: ${colors.pink};
+    --color-ansi-magenta-bright: ${colors.pink};
+    --color-ansi-cyan: ${colors.teal};
+    --color-ansi-cyan-bright: ${colors.teal};
+    --color-prettylights-syntax-comment: ${colors.overlay2};
+    --color-prettylights-syntax-constant: ${colors.blue};
+    --color-prettylights-syntax-constant-other-reference-link: ${colors.blue};
+    --color-prettylights-syntax-entity: ${colors.blue};
+    --color-prettylights-syntax-storage-modifier-import: ${colors.peach};
+    --color-prettylights-syntax-entity-tag: ${colors.blue};
+    --color-prettylights-syntax-keyword: ${colors.mauve};
+    --color-prettylights-syntax-string: ${colors.green};
+    --color-prettylights-syntax-variable: ${colors.peach};
+    --color-prettylights-syntax-invalid-illegal-text: ${colors.red};
+    --color-prettylights-syntax-invalid-illegal-bg: ${fade(colors.red, 15)};
+    --color-prettylights-syntax-markup-heading: ${colors.red};
+    --color-prettylights-syntax-markup-italic: ${colors.yellow};
+    --color-prettylights-syntax-markup-bold: ${colors.yellow};
+    --color-prettylights-syntax-markup-deleted-text: ${colors.text};
+    --color-prettylights-syntax-markup-deleted-bg: ${fade(colors.red, 40)};
+    --color-prettylights-syntax-markup-inserted-text: ${colors.text};
+    --color-prettylights-syntax-markup-inserted-bg: ${fade(colors.green, 40)};
+    --color-prettylights-syntax-markup-changed-text: ${colors.text};
+    --color-prettylights-syntax-markup-changed-bg: ${fade(colors.yellow, 40)};
+    --color-prettylights-syntax-markup-ignored-text: ${colors.text};
+    --bgColor-white: ${colors.base};
+    --color-scale-white: ${colors.base};
+    --color-scale-gray-3: ${colors.overlay2};
+    --color-scale-gray-5: ${colors.overlay0};
+    --color-scale-gray-6: ${colors.surface1};
+    --color-scale-gray-7: ${colors.surface1};
+    --color-scale-blue-2: ${colors.sky};
+    --color-scale-blue-5: ${colors.blue};
+    --color-scale-green-3: ${colors.green};
+    --color-scale-green-4: ${colors.green};
+    --color-scale-yellow-3: ${colors.peach};
+    --color-scale-orange-4: ${colors.peach};
+    --color-scale-red-4: ${colors.red};
+    --shadow-inset: inset 0px 1px 0px 0px ${colors.crust};
+    --shadow-resting-xsmall: 0px 1px 0px 0px ${colors.crust};
+    --shadow-resting-small: 0px 1px 0px 0px ${colors.crust}, 0px 1px 3px 0px ${colors.crust};
+    --shadow-resting-medium: 0px 3px 6px 0px ${colors.crust};
+    --shadow-floating-small: 0px 0px 0px 1px ${colors.base}, 0px 6px 12px -3px ${colors.crust}, 0px 6px 18px 0px ${colors.crust};
+    --shadow-floating-medium: 0px 0px 0px 1px ${colors.surface0}, 0px 8px 16px -4px ${colors.crust}, 0px 4px 32px -4px ${colors.crust}, 0px 24px 48px -12px ${colors.crust}, 0px 48px 96px -24px ${colors.crust};
+    --shadow-floating-large: 0px 0px 0px 1px ${colors.surface0}, 0px 24px 48px 0px #010409;
+    --shadow-floating-xlarge: 0px 0px 0px 1px ${colors.surface0}, 0px 32px 64px 0px #010409;
+    --shadow-floating-legacy: 0px 6px 12px -3px ${colors.crust}, 0px 6px 18px 0px ${colors.crust};
+    --outline-focus: ${colors.blue} solid 2px;
+`;
+// ============================================================
+    // 元素选择器样式
+    // ============================================================
+    css += `
+    /* Feed Links */
+    .feed-item-content a code, .feed-item-content a tt {
+        color: var(--accent);
+    }
+
+    /* Customer Terms & Agreements Page */
+    .enterprise-customer-agreement {
+        color: ${colors.text} !important;
+    }
+    .enterprise-customer-agreement:hover .octicon,
+    .enterprise-customer-agreement:hover h3 {
+        color: var(--accent) !important;
+    }
+
+    /* Enhanced Repo Insights Views */
+    --data-blue-color-emphasis: var(--accent);
+    --data-red-color-emphasis: ${colors.red};
+    --data-green-color-emphasis: ${colors.green};
+
+    /* Copilot Chat */
+    --display-green-fgColor: ${colors.green};
+    --display-teal-fgColor: ${colors.teal};
+    --display-purple-fgColor: ${colors.mauve};
+    --display-blue-fgColor: ${colors.blue};
+    --display-pink-fgColor: ${colors.pink};
+    --display-gray-fgColor: ${colors.subtext0};
+    react-app[app-name="copilot-immersive-v1"] button,
+    copilot-dashboard-entrypoint button {
+        color: ${colors.text};
+    }
+
+    /* docs.github.com */
+    --color-fg-default: ${colors.text};
+    --color-canvas-default: ${colors.base};
+    --color-canvas-subtle: ${colors.mantle};
+
+    --tooltip-fgColor: ${colors.base};
+    --tooltip-bgColor: ${colors.overlay2};
+
+    /* Refined GitHub */
+    --rgh-heat-color: ${colors.peach};
+
+    .turbo-progress-bar {
+        background-color: var(--accent);
+    }
+
+    .form-select {
+        background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='${encodeURIComponent(colors.subtext0)}' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m4.427 9.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 9H4.604a.25.25 0 0 0-.177.427M4.423 6.47 7.82 3.072a.25.25 0 0 1 .354 0L11.57 6.47a.25.25 0 0 1-.177.427H4.6a.25.25 0 0 1-.177-.427'/%3E%3C/svg%3E");
+    }
+
+    img[src="https://github.githubassets.com/assets/mona-loading-default-c3c7aad1282f.gif"] {
+        content: url("https://giscus.catppuccin.com/assets/loading_48x48.gif");
+    }
+
+    /* Header when logged out */
+    .header-search-button svg {
+        fill: ${colors.text} !important;
+    }
+    .HeaderMenu-toggle-bar {
+        border-color: ${colors.text};
+    }
+    .notification-indicator .mail-status {
+        background-image: linear-gradient(var(--accent), ${darken(accent, 5)});
+    }
+
+    .CheckStep .ansifg-r { color: var(--color-ansi-red); }
+    .CheckStep .ansifg-y { color: var(--color-ansi-yellow); }
+    .CheckStep .ansifg-g { color: var(--color-ansi-green); }
+    .CheckStep .ansifg-b { color: var(--color-ansi-blue); }
+    .CheckStep .ansifg-c { color: var(--color-ansi-cyan); }
+    .CheckStep .ansifg-m { color: var(--color-ansi-magenta); }
+    .CheckStep .ansifg-gr { color: var(--color-ansi-gray); }
+
+    .js-activity-overview-graph .js-highlight-blob {
+        fill: var(--accent);
+        stroke: var(--accent);
+    }
+
+    .subnav-link.selected {
+        border-bottom-color: var(--accent);
+    }
+
+    /* Pull request check in progress indicator */
+    [stroke="#DBAB0A"] {
+        stroke: ${fade(colors.yellow, 70)} !important;
+    }
+    [fill="#DBAB0A"] {
+        fill: ${colors.yellow} !important;
+    }
+
+    /* Issue timeline icon */
+    .TimelineItem-Badge[class*="prc-Timeline-TimelineBadge"],
+    .TimelineItem-Badge {
+        fill: ${colors.base};
+    }
+`;
+
+    // ============================================================
+    // viewscreen Mermaid 图表样式
+    // ============================================================
+    css += `
+    [data-color-mode="auto"][data-light-theme="light"],
+    [data-color-mode="light"][data-light-theme="light"] {
+        --color-btn-text: ${colors.text};
+        --color-btn-bg: ${colors.surface0};
+        --color-btn-border: ${colors.surface1};
+        --color-btn-hover-bg: ${colors.surface1};
+        --color-btn-hover-border: ${colors.surface2};
+        --color-btn-active-bg: ${colors.surface2};
+        --color-btn-selected-bg: ${colors.surface2};
+        --color-btn-counter-bg: ${colors.surface2};
+        --color-btn-outline-text: var(--accent);
+        --color-fg-muted: ${colors.subtext1};
+        --button-default-fgColor-rest: ${colors.text};
+        --button-default-bgColor-rest: ${colors.surface0};
+        --button-default-bgColor-hover: ${colors.surface1};
+        --button-default-bgColor-active: ${colors.surface2};
+        --button-default-bgColor-selected: ${colors.surface2};
+        --button-default-bgColor-disabled: ${fade(colors.surface0, 70)};
+        --button-default-borderColor-rest: ${colors.surface1};
+        --button-default-borderColor-hover: ${colors.surface1};
+        --button-default-borderColor-active: ${colors.surface1};
+        --button-default-borderColor-disabled: ${fade(colors.surface0, 70)};
+    }
+    #diagram .node rect, #diagram .node circle, #diagram .node ellipse,
+    #diagram .node polygon, #diagram .node path {
+        fill: ${fade(accent, 10)};
+        stroke: var(--accent);
+    }
+    #diagram .cluster rect {
+        fill: ${colors.surface0};
+        stroke: ${colors.surface2};
+    }
+    #diagram .label text, #diagram span, #diagram p {
+        fill: ${colors.text};
+        color: ${colors.text};
+    }
+    #diagram .flowchart-link {
+        stroke: ${colors.subtext0};
+    }
+    #diagram .marker {
+        stroke: ${colors.subtext0};
+        fill: ${colors.subtext0};
+    }
+    #diagram .edgeLabel {
+        background-color: ${colors.crust};
+    }
+    #diagram .edgeLabel p {
+        background-color: ${colors.surface2};
+    }
+    .octicon {
+        fill: var(--color-fg-muted) !important;
+    }
+`;
+
+    // ============================================================
+    // notebooks (Jupyter) 主题
+    // ============================================================
+    css += `
+    :root {
+        --jp-border-color0: var(--color-scale-gray-7);
+        --jp-border-color1: var(--color-scale-gray-7);
+        --jp-border-color2: var(--color-scale-gray-8);
+        --jp-border-color3: var(--color-scale-gray-9);
+        --jp-ui-font-color0: ${colors.text};
+        --jp-ui-font-color1: ${fade(colors.text, 87)};
+        --jp-ui-font-color2: ${fade(colors.text, 54)};
+        --jp-ui-font-color3: ${fade(colors.text, 28)};
+        --jp-ui-inverse-font-color0: ${colors.crust};
+        --jp-ui-inverse-font-color1: ${fade(colors.crust, 80)};
+        --jp-ui-inverse-font-color2: ${fade(colors.crust, 50)};
+        --jp-ui-inverse-font-color3: ${fade(colors.crust, 30)};
+        --jp-content-font-color0: ${colors.text};
+        --jp-content-font-color1: ${colors.text};
+        --jp-content-font-color2: ${fade(colors.text, 70)};
+        --jp-content-font-color3: ${fade(colors.text, 50)};
+        --jp-content-link-color: ${colors.sapphire};
+        --jp-layout-color0: ${colors.base} !important;
+        --jp-layout-color1: var(--color-scale-gray-9);
+        --jp-layout-color2: var(--color-scale-gray-8);
+        --jp-layout-color3: var(--color-scale-gray-7);
+        --jp-layout-color4: var(--color-scale-gray-6);
+        --jp-inverse-layout-color0: var(--color-scale-white);
+        --jp-inverse-layout-color1: var(--color-scale-white);
+        --jp-inverse-layout-color2: var(--color-scale-gray-2);
+        --jp-inverse-layout-color3: var(--color-scale-gray-4);
+        --jp-inverse-layout-color4: var(--color-scale-gray-6);
+        --jp-brand-color0: var(--color-scale-blue-7);
+        --jp-brand-color1: var(--color-scale-blue-5);
+        --jp-brand-color2: var(--color-scale-blue-3);
+        --jp-brand-color3: var(--color-scale-blue-1);
+        --jp-brand-color4: var(--color-scale-blue-0);
+        --jp-accent-color0: var(--color-scale-green-7);
+        --jp-accent-color1: var(--color-scale-green-5);
+        --jp-accent-color2: var(--color-scale-green-3);
+        --jp-accent-color3: var(--color-scale-green-1);
+        --jp-warn-color0: var(--color-scale-orange-7);
+        --jp-warn-color1: var(--color-scale-orange-5);
+        --jp-warn-color2: var(--color-scale-orange-3);
+        --jp-warn-color3: var(--color-scale-orange-1);
+        --jp-error-color0: var(--color-scale-red-7);
+        --jp-error-color1: var(--color-scale-red-5);
+        --jp-error-color2: var(--color-scale-red-3);
+        --jp-error-color3: var(--color-scale-red-1);
+        --jp-success-color0: var(--color-scale-green-7);
+        --jp-success-color1: var(--color-scale-green-5);
+        --jp-success-color2: var(--color-scale-green-3);
+        --jp-success-color3: var(--color-scale-green-1);
+        --jp-info-color0: var(--color-scale-blue-7);
+        --jp-info-color1: var(--color-scale-blue-5);
+        --jp-info-color2: var(--color-scale-blue-3);
+        --jp-info-color3: var(--color-scale-blue-1);
+        --jp-cell-editor-background: ${colors.mantle};
+        --jp-cell-editor-border-color: var(--color-scale-gray-7);
+        --jp-cell-editor-box-shadow: inset 0 0 2px var(--color-scale-blue-3);
+        --jp-cell-prompt-not-active-font-color: ${fade(colors.text, 50)};
+        --jp-cell-inprompt-font-color: var(--color-scale-blue-6);
+        --jp-cell-outprompt-font-color: var(--color-scale-coral-6);
+        --jp-notebook-multiselected-color: ${fade(colors.overlay2, 14)};
+        --jp-rendermime-error-background: ${fade(colors.red, 18)};
+        --jp-rendermime-table-row-background: var(--color-scale-gray-9);
+        --jp-rendermime-table-row-hover-background: ${fade(colors.surface2, 14)};
+        --jp-dialog-background: ${fade(colors.crust, 60)};
+        --jp-toolbar-box-shadow: 0px 0px 2px 0px ${fade(colors.crust, 80)};
+        --jp-input-box-shadow: inset 0 0 2px var(--color-scale-blue-3);
+        --jp-input-background: var(--color-scale-gray-8);
+        --jp-input-active-box-shadow-color: ${fade(colors.blue, 30)};
+        --jp-editor-selected-focused-background: ${fade(colors.blue, 14)};
+        --jp-mirror-editor-keyword-color: var(--color-scale-green-5);
+        --jp-mirror-editor-atom-color: var(--color-scale-blue-3);
+        --jp-mirror-editor-number-color: var(--color-scale-green-4);
+        --jp-mirror-editor-def-color: var(--color-scale-blue-6);
+        --jp-mirror-editor-variable-color: var(--color-scale-gray-3);
+        --jp-mirror-editor-variable-2-color: var(--color-scale-blue-4);
+        --jp-mirror-editor-variable-3-color: var(--color-scale-green-6);
+        --jp-mirror-editor-punctuation-color: var(--color-scale-blue-4);
+        --jp-mirror-editor-property-color: var(--color-scale-blue-4);
+        --jp-mirror-editor-operator-color: ${colors.mauve};
+        --jp-mirror-editor-comment-color: ${colors.subtext0};
+        --jp-mirror-editor-string-color: ${colors.peach};
+        --jp-mirror-editor-string-2-color: var(--color-scale-purple-3);
+        --jp-mirror-editor-meta-color: ${colors.mauve};
+        --jp-mirror-editor-qualifier-color: var(--color-scale-gray-5);
+        --jp-mirror-editor-builtin-color: var(--color-scale-green-6);
+        --jp-mirror-editor-bracket-color: var(--color-scale-gray-2);
+        --jp-mirror-editor-tag-color: var(--color-scale-blue-7);
+        --jp-mirror-editor-attribute-color: var(--color-scale-blue-7);
+        --jp-mirror-editor-header-color: var(--color-scale-blue-5);
+        --jp-mirror-editor-quote-color: var(--color-scale-green-3);
+        --jp-mirror-editor-link-color: var(--color-scale-blue-7);
+        --jp-mirror-editor-error-color: ${colors.red};
+        --jp-mirror-editor-hr-color: var(--color-scale-gray-8);
+        --jp-vega-background: var(--color-scale-gray-4);
+        --jp-search-selected-match-background-color: ${colors.yellow};
+        --jp-search-selected-match-color: ${colors.crust};
+        --jp-icon-contrast-color0: var(--color-scale-purple-6);
+        --jp-icon-contrast-color1: var(--color-scale-green-6);
+        --jp-icon-contrast-color2: var(--color-scale-pink-6);
+        --jp-icon-contrast-color3: var(--color-scale-blue-6);
+    }
+`;
+
+    // 应用样式
+    GM_addStyle(css);
+})();
