@@ -108,7 +108,7 @@ alias glow='glow -s ~/.config/glow/catppuccin-mocha.json'
 alias vfishrc="vim ~/.config/fish/config.fish && ci"
 alias lf="yazi"
 alias ncat='nyancat'
-alias tmux='zellij'
+# alias ze='zellij'
 alias tldr='tldr -L zh'
 alias ffc='fastfetch'
 alias fs="fish"
@@ -160,6 +160,10 @@ set -gx FZF_DEFAULT_OPTS "\
 --margin=1,2 \
 --padding=0,1 \
 --cycle \
+--border \
+--header "FLT18355的FZF" \
+--header-border inline \
+--header-first \
 --keep-right \
 --scroll-off=5 \
 --bind='ctrl-u:clear-query' \
@@ -171,8 +175,8 @@ set -gx FZF_DEFAULT_OPTS "\
 --bind='alt-up:preview-page-up' \
 --bind='alt-down:preview-page-down' \
 --color=bg+:#1E1E2E,bg:#2A2A3E,spinner:#F9E2AF,hl:#F38BA8:underline \
---color=fg:#94E2D5,header:#F38BA8:bold,info:#CBA6F7,pointer:#F9E2AF \
---color=marker:#B4BEFE,fg+:#89B4FA,prompt:#CBA6F7,hl+:#F38BA8:reverse \
+--color=fg:#CDD6F4,header:#F38BA8:bold,info:#CBA6F7,pointer:#F9E2AF \
+--color=marker:#B4BEFE,fg+:#A6E3A1,prompt:#CBA6F7,hl+:#F38BA8:reverse \
 --color=selected-bg:#45475A \
 --color=border:#CBA6F7,label:#CDD6F4 \
 --color=query:#CDD6F4 \
@@ -180,9 +184,9 @@ set -gx FZF_DEFAULT_OPTS "\
 --color=preview-bg:#2A2A3E \
 --color=preview-border:#6C7086 \
 --color=preview-label:#89B4FA:bold \
---color=list-fg:#94E2D5 \
+--color=list-fg:#CDD6F4 \
 --color=list-bg:#2A2A3E \
---color=selected-fg:#94E2D5 \
+--color=selected-fg:#CDD6F4 \
 --color=scrollbar:#6C7086 \
 --color=separator:#6C7086"
 
@@ -236,8 +240,6 @@ fzf --fish | source
 
 # Oh My Posh 主题
 oh-my-posh init fish --config $PREFIX/share/oh-my-posh/themes/poshcat.omp.json | source
-# atuin
-atuin init fish | source
 
 # --------------------------------------------
 # 函数 (Functions)
@@ -258,7 +260,6 @@ function sa
     pip cache purge
     go clean -cache
     rm -rf ~/.cargo/registry
-    sqlite3 ~/.local/share/atuin/history.db "PRAGMA wal_checkpoint(TRUNCATE);"
     echo "是否要运行 pip-review 更新 Python 包？" | lolcat
     echo "1) 继续运行" | lolcat
     echo "2) 跳过" | lolcat
@@ -317,7 +318,7 @@ end
 
 echo ""
 ~/logo.sh
-am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity # 每次启动的时候启动termux:api
+# am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity # 每次启动的时候启动termux:api
 
 # --------------------------------------------
 # 提示符 (Prompt)
