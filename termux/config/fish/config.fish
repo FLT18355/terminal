@@ -214,6 +214,7 @@ set -gx LESS_TERMCAP_so (printf '\E[01;44;33m')
 set -gx LESS_TERMCAP_ue (printf '\E[0m')
 set -gx LESS_TERMCAP_us (printf '\E[1;32m')
 
+fish_add_path ~/bin
 # 语言设置
 set -gx TLDR_LANGUAGE zh
 
@@ -305,7 +306,7 @@ end
 # 光标设置
 # --------------------------------------------
 # 设置光标为闪烁的竖线
-echo -ne '\e[5 q'
+# echo -ne '\e[5 q'
 
 # ci 函数：恢复光标
 function ci
@@ -316,8 +317,7 @@ end
 # 启动画面(欢迎语)[启动运行]
 # --------------------------------------------
 
-echo ""
-~/logo.sh
+# echo " "
 # am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity # 每次启动的时候启动termux:api
 
 # --------------------------------------------
