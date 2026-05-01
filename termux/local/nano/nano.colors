@@ -1,0 +1,79 @@
+## == Display test for all nano colours ==
+## to make it obvious to me ...
+## Nigel Derbyshire (CarbonWriter); 2025.
+
+# side-note: I'm from the UK so I would normally
+# spell colour correctly, but have used the "incorrect"
+# spelling (filename & comments) to avoid typos on my part 
+# (and to match the official documentation)
+# ;-)
+
+# How to use it:
+# make sure this file is named "nano.colors"
+# place this file in the local nano share
+# eg, ~/.local/share/nano
+# then include the file in your ~/.nanorc file
+# eg include ~/.local/share/nano/nano.colors
+
+# whenever you load this file in nano, it will match
+# the filename using the syntax command below,
+# then display itself using it's own color definitions
+
+syntax nanocolors "nano.colors"
+
+# default 
+color white ".*"
+
+# Basic colors
+color red "red"
+color green "green"
+color blue "blue"
+
+color magenta "magenta"
+color yellow "yellow"
+color cyan "cyan"
+
+# Bright variants
+color brightred "brightred"
+color brightgreen "brightgreen"
+color brightblue "brightblue"
+color brightmagenta "brightmagenta"
+color brightyellow "brightyellow"
+color brightcyan "brightcyan"
+
+# w_h_i_t_e
+color white "white"
+# b_l_a_c_k
+color black "black"
+
+color grey "grey"
+color gray "gray"
+
+# For 256 color terminals
+# for anyone wondering about the order used here
+# it's taken from the man page for nanorc; the set titlecolor section
+# (yeah, it doesn't make sense to me either)
+
+color pink "pink"
+color purple "purple"
+color mauve "mauve"
+color lagoon "lagoon"
+color mint "mint"
+color lime "lime"
+color peach "peach"
+color latte "latte"
+color rosy "rosy"
+color beet "beet"
+color plum "plum"
+color sea "sea"
+color sky "sky"
+color slate "slate"
+color teal "teal"
+color sage "sage"
+color brown "brown"
+color ocher "ocher"
+color sand "sand"
+color tawny "tawny"
+color brick "brick"
+color crimson "crimson"
+
