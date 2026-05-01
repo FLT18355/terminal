@@ -137,6 +137,7 @@ abbr --add gd "git diff"
 abbr --add g git
 abbr --add tma "am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity"
 abbr --add gga "git gc --aggressive"
+abbr --add gpa "git push && git gc --aggressive"
 
 # --------------------------------------------
 # 环境变量 (set -gx)
