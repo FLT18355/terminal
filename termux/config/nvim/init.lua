@@ -17,3 +17,19 @@ require("mason-lspconfig").setup({
 -- catppuccin
 vim.cmd.colorscheme("catppuccin")
 
+-- F2 格式化 Python 文件（使用 ruff）
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function()
+    vim.keymap.set("n", "<F2>", function()
+      -- 方法一：使用 LSP 格式化（推荐，如果 ruff LSP 已配置）
+      -- vim.lsp.buf.format({ async = false })
+
+      -- 方法二：如果不想用 LSP，可以用系统命令直接调用 ruff
+      local filename = vim.fn.expand("%:p")
+      vim.cmd(string.format('!ruff format "%s"', filename))
+      vim.notify("已使用 ruff 格式化", vim.log.levels.INFO)
+
+    end, { buffer = true, desc = "Format Python with ruff" })
+  end,
+})
