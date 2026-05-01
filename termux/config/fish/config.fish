@@ -47,7 +47,7 @@ alias wget="wget --show-progress"
 alias curl-head="curl -I"
 alias down="aria2c -x 16 -s 16"
 
-alias cl='clear && echo "󰄛 打扫干净啦！"'
+alias cl='clear && echo "󰄛 打扫干净啦！" && ci'
 
 # 压缩解压
 alias untar="tar -xvf"
@@ -135,7 +135,6 @@ abbr --add gl "git pull"
 abbr --add gc "git commit"
 abbr --add gd "git diff"
 abbr --add g git
-abbr --add cl "clear && echo '󰄛 打扫干净啦！'"
 abbr --add tma "am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity"
 abbr --add gga "git gc --aggressive"
 
@@ -197,9 +196,9 @@ set -gx HISTFILE ~/.local/share/fish/fish_history
 set -gx fish_history_max 500000
 
 # Carapace 补全
-set -gx CARAPACE_BRIDGES "zsh,fish,bash,inshellisense"
+# set -gx CARAPACE_BRIDGES "zsh,fish,bash,inshellisense"
 # Fish 中 Carapace 需要这样加载
-carapace _carapace | source
+# carapace _carapace | source
 
 # Bat 主题
 set -gx BAT_THEME "Catppuccin Mocha"
@@ -257,9 +256,7 @@ function sa
     echo "正在运行主程序..." | lolcat
     upd
     clean
-    go clean -modcache
     pip cache purge
-    go clean -cache
     rm -rf ~/.cargo/registry
     echo "是否要运行 pip-review 更新 Python 包？" | lolcat
     echo "1) 继续运行" | lolcat
