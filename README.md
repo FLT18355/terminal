@@ -9,7 +9,7 @@ git clone https://github.com/FLT18355/terminal.git
 ```
 **进行克隆**
 
-- *完整*的**NeoVim**配置
+- *完整*的**NeoVim**配置(**本配置是在lazyvim的基础上面写的,请先安装lazyvim** `git clone https://github.com/LazyVim/starter ~/.config/nvim`)
   - lazyvim
   - lualine
   - blink
