@@ -9,6 +9,20 @@ git clone https://github.com/FLT18355/terminal.git
 ```
 **进行克隆**
 
+- *完整*的**NeoVim**配置
+  - lazyvim
+  - lualine
+  - blink
+  - ...
+- **Catppuccin** 主题
+  - NeoVim
+  - LazyGit
+  - ...
+- ***仅供参考***的fish配置
+  - abbr
+  - alias
+  - ...
+
 ![](https://github.com/FLT18355/terminal/blob/main/assets/1.png?raw=true)
-[](https://github.com/FLT18355/terminal/blob/main/assets/2.png?raw=true)
-[](https://github.com/FLT18355/terminal/blob/main/assets/3.png?raw=true)
+![](https://github.com/FLT18355/terminal/blob/main/assets/2.png?raw=true)
+![](https://github.com/FLT18355/terminal/blob/main/assets/3.png?raw=true)
