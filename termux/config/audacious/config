@@ -1,0 +1,7 @@
+
+[audgui]
+filesel_path=/data/data/com.termux/files/home/storage/shared/Music/Music
+
+[qtui]
+player_height=949
+player_width=2000
