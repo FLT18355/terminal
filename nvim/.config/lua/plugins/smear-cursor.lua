@@ -12,7 +12,7 @@ return {
     distance_stop_animating_vertical_bar = 2, -- 光标移动超过多少字符时停止拖尾动画
 
     -- 拖尾动画的"手感"参数
-    stiffness = 0.9,           -- 光标硬度（0-1，越高越跟手）
+    stiffness = 1.0,           -- 光标硬度（0-1，越高越跟手）
     trailing_stiffness = 0.5,  -- 拖尾部分的硬度
     damping = 0.95,            -- 阻尼（越高动画停止越慢，越有"惯性"）
     damping_insert_mode = 0.9, -- 插入模式的阻尼
