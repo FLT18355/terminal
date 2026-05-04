@@ -1,4 +1,4 @@
-# FLT18355 - Termux(NeoVim) 配置
+# FLT18355 - terminal 配置
 
 - 里面的配置文件**仅供参考**
 - **FLT18355's** ***Dotfiles***
@@ -24,7 +24,7 @@ git clone https://github.com/FLT18355/terminal.git
   - ...
 - **终端**
   - ZeroTermux
-  - Kitty(awa)
+  - Kitty
 ![](https://github.com/FLT18355/terminal/blob/main/assets/1.png?raw=true)
 ![](https://github.com/FLT18355/terminal/blob/main/assets/2.png?raw=true)
 ![](https://github.com/FLT18355/terminal/blob/main/assets/3.png?raw=true)
