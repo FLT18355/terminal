@@ -64,7 +64,6 @@ alias cp="cp -iv"
 alias mv="mv -iv"
 alias rm="rm -i"
 alias ln="ln -s"
-alias backup="cp -r"
 
 # 计时工具
 alias timer='time read'
@@ -276,6 +275,13 @@ function sa
     echo "运行完毕,再一次清理pip cache" | lolcat
     pip cache purge
     echo "所有执行程序都运行完毕,感谢您的使用,Bye" | lolcat
+end
+
+# kitty终端启动
+function open_kitty
+    export DISPLAY=:0
+    openbox &
+    kitty
 end
 
 # Yazi 包装函数：退出时自动切换到浏览的目录
