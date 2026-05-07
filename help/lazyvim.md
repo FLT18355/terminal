@@ -104,6 +104,10 @@ sudo apt install build-essential -y
 :Lazy sync
 ```
 
+5. 关于我的配置使用问题
+
+直接复制就行(可能会出一点小小的问题)
+
 💡 下一步
 
 安装完成后，你可以：
