@@ -123,6 +123,8 @@ alias gd='git diff'
 alias ga.='git add .'
 alias ggap='git gc --aggressive --prune=now'
 alias yt-dlp='yt-dlp --cookies ~/终端专用文件夹/cookies.txt'
+# 定义一个名为 'gsh' 的命令，一键进入 glibc 环境
+alias gsh='grun --shell'
 
 # --------------------------------------------
 # 缩写 (Abbreviations - Fish 特色)
