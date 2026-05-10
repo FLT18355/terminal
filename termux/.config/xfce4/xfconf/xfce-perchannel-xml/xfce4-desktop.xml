@@ -11,6 +11,7 @@
       <property name="monitorbuiltin" type="empty">
         <property name="workspace0" type="empty">
           <property name="last-image" type="string" value="/data/data/com.termux/files/home/catppuccin壁纸_sc.png"/>
+          <property name="image-style" type="int" value="5"/>
         </property>
       </property>
     </property>
