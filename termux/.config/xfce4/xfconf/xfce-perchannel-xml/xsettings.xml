@@ -2,8 +2,8 @@
 
 <channel name="xsettings" version="1.0">
   <property name="Net" type="empty">
-    <property name="ThemeName" type="string" value="catppuccin-mocha-mauve-standard+default"/>
-    <property name="IconThemeName" type="string" value="Papirus-Dark"/>
+    <property name="ThemeName" type="string" value="Catppuccin-B-MB-Dark"/>
+    <property name="IconThemeName" type="string" value="Catppuccin-Mocha-Alt2"/>
     <property name="DoubleClickTime" type="empty"/>
     <property name="DoubleClickDistance" type="empty"/>
     <property name="DndDragThreshold" type="empty"/>
@@ -30,7 +30,7 @@
     <property name="MenuImages" type="empty"/>
     <property name="ButtonImages" type="empty"/>
     <property name="MenuBarAccel" type="empty"/>
-    <property name="CursorThemeName" type="string" value="Bibata-Modern-Classic"/>
+    <property name="CursorThemeName" type="string" value="catppuccin-mocha-mauve-cursors"/>
     <property name="CursorThemeSize" type="int" value="24"/>
     <property name="DecorationLayout" type="string" value="icon,menu:minimize,maximize,close"/>
     <property name="DialogsUseHeader" type="empty"/>

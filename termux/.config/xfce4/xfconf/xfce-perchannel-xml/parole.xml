@@ -13,7 +13,7 @@
     <property name="volume" type="int" value="100"/>
   </property>
   <property name="folders" type="empty">
-    <property name="last-used-media" type="string" value="/data/data/com.termux/files/home/Desktop"/>
+    <property name="last-used-media" type="string" value="/data/data/com.termux/files/home"/>
   </property>
   <property name="playlist" type="empty">
     <property name="repeat" type="bool" value="true"/>
