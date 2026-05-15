@@ -31,9 +31,6 @@ configs:
     "trash:///":
       row: 2
       col: 0
-    "/data/data/com.termux/files/home/Desktop/Catppuccin-Mocha-Alt2":
-      row: 3
-      col: 2
     "/data/data/com.termux/files/home/Desktop/Catppuccin-B-MB-Dark-xhdpi":
       row: 5
       col: 1
@@ -42,6 +39,9 @@ configs:
       col: 1
     "/data/data/com.termux/files/home/Desktop/Catppuccin-B-MB-Dark-hdpi":
       row: 4
+      col: 1
+    "/data/data/com.termux/files/home/Desktop/Alacritty.desktop":
+      row: 2
       col: 1
     "/data/data/com.termux/files/home/Desktop/nvim.desktop":
       row: 7
@@ -55,14 +55,14 @@ configs:
     "/data/data/com.termux/files/home/Desktop/galculator.desktop":
       row: 4
       col: 0
+    "/data/data/com.termux/files/home/Desktop/4913":
+      row: 3
+      col: 1
     "/":
       row: 1
       col: 0
     "/data/data/com.termux/files/home/Desktop/catppuccin-mocha-dark-cursors":
       row: 2
-      col: 1
-    "/data/data/com.termux/files/home/Desktop/4913":
-      row: 3
       col: 1
     "/data/data/com.termux/files/home/Desktop/Catppuccin-Mocha":
       row: 1
@@ -73,39 +73,39 @@ configs:
     "/data/data/com.termux/files/home":
       row: 0
       col: 0
-    "/data/data/com.termux/files/home/Desktop/\u58C1\u7EB8\u81EA\u53D6 [BV1XGbrz4EE5].f30280.m4a":
-      row: 4
-      col: 1
     "/data/data/com.termux/files/home/Desktop/Catppuccin-SE":
       row: 0
+      col: 1
+    "/data/data/com.termux/files/home/Desktop/\u58C1\u7EB8\u81EA\u53D6 [BV1XGbrz4EE5].mp4":
+      row: 5
       col: 1
     "/data/data/com.termux/files/home/Desktop/Catppuccin-B-MB-Dark":
       row: 3
       col: 1
-    "/data/data/com.termux/files/home/Desktop/\u7A3B\u9999.mp3":
-      row: 0
+    "/data/data/com.termux/files/home/Desktop/\u58C1\u7EB8\u81EA\u53D6 [BV1XGbrz4EE5].f30280.m4a":
+      row: 4
       col: 1
-    "/data/data/com.termux/files/home/Desktop/xfce4-taskmanager.desktop":
+    "/data/data/com.termux/files/home/Desktop/\u58C1\u7EB8\u81EA\u53D6 [BV1XGbrz4EE5].temp.mp4":
       row: 5
-      col: 0
+      col: 1
     "/data/data/com.termux/files/home/Desktop/firefox.desktop":
       row: 8
       col: 0
-    "/data/data/com.termux/files/home/Desktop/\u58C1\u7EB8\u81EA\u53D6 [BV1XGbrz4EE5].mp4":
+    "/data/data/com.termux/files/home/Desktop/xfce4-taskmanager.desktop":
       row: 5
+      col: 0
+    "/data/data/com.termux/files/home/Desktop/\u7A3B\u9999.mp3":
+      row: 0
       col: 1
     "/data/data/com.termux/files/home/Desktop/\u58C1\u7EB8\u81EA\u53D6 [BV1XGbrz4EE5].f100026.mp4.part":
       row: 3
       col: 1
+    "/data/data/com.termux/files/home/Desktop/Catppuccin-Mocha-Alt2":
+      row: 3
+      col: 2
     "/data/data/com.termux/files/home/Desktop/catppuccin-mocha.theme":
       row: 1
       col: 9
-    "/data/data/com.termux/files/home/Desktop/\u58C1\u7EB8\u81EA\u53D6 [BV1XGbrz4EE5].temp.mp4":
-      row: 5
-      col: 1
-    "/data/data/com.termux/files/home/Desktop/Alacritty.desktop":
-      row: 2
-      col: 1
     "/data/data/com.termux/files/home/Desktop/xfce4-screenshooter.desktop":
       row: 3
       col: 0
