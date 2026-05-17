@@ -1,0 +1,6 @@
+[General]
+FixedWidthFont=Maple Mono NF CN,10,-1,5,50,0,0,0,0,0
+
+[Mouse]
+cursorSize=18
+cursorTheme=catppuccin-latte-mauve-cursors
