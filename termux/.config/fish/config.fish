@@ -240,9 +240,6 @@ zoxide init fish | source
 # --------------------------------------------
 fzf --fish | source
 
-# Oh My Posh 主题
-oh-my-posh init fish --config $PREFIX/share/oh-my-posh/themes/poshcat.omp.json | source
-
 # --------------------------------------------
 # 函数 (Functions)
 # --------------------------------------------
@@ -334,6 +331,7 @@ end
 # 主题
 # --------------------------------------------
 fish_config theme choose catppuccin-mocha
+eval "$(starship init fish)"
 
 # ============================================
 # Vi 模式完整配置 (默认启用及增强)
