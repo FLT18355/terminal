@@ -27,6 +27,7 @@ $time\
 [ ](fg:lavender)\
 $cmd_duration\
 $line_break\
+\n\
 $character"""
 
 palette = 'catppuccin_mocha'
@@ -43,7 +44,7 @@ Raspbian = "󰐿"
 Mint = "󰣭"
 Macos = "󰀵"
 Manjaro = ""
-Linux = "󰌽"
+Linux = " 󰣇"
 Gentoo = "󰣨"
 Fedora = "󰣛"
 Alpine = ""
