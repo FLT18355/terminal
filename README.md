@@ -28,3 +28,5 @@ git clone https://github.com/FLT18355/terminal.git
 ![](https://github.com/FLT18355/terminal/blob/main/assets/1.png?raw=true)
 ![](https://github.com/FLT18355/terminal/blob/main/assets/2.png?raw=true)
 ![](https://github.com/FLT18355/terminal/blob/main/assets/3.png?raw=true)
+
+catppuccin.com
