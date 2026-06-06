@@ -1,0 +1,10 @@
+[MIME Cache]
+application/msword=libreoffice-qt6.desktop;
+application/vnd.ms-excel=libreoffice-qt6.desktop;
+application/vnd.ms-powerpoint=libreoffice-qt6.desktop;
+application/vnd.openxmlformats-officedocument.presentationml.presentation=libreoffice-qt6.desktop;
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet=libreoffice-qt6.desktop;
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-qt6.desktop;
+inode/directory=yazi.desktop;
+text/html=obsidian.desktop;
+x-scheme-handler/obsidian=obsidian.desktop;

@@ -83,15 +83,15 @@ draw_bold_text_with_bright_colors = true
 normal = { family = "Maple Mono NF CN", style = "Regular" }
 size = 18
 
-[window]
-
-decorations = "None"
-dynamic_padding = true
-padding = { x = 10, y = 10 }
-dimensions = { columns = 138, lines = 37 }
-position = { x = 0, y = 0 }
-opacity = 0.9
-blur = true
+# [window]
+#
+# decorations = "None"
+# dynamic_padding = true
+# padding = { x = 10, y = 10 }
+# dimensions = { columns = 138, lines = 37 }
+# position = { x = 0, y = 0 }
+# opacity = 0.9
+# blur = true
 
 [scrolling]
 

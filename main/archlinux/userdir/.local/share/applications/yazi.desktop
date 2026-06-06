@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Yazi
+Comment=Open directories with Yazi in terminal
+Exec=konsole -e yazi %u
+Terminal=false
+Type=Application
+MimeType=inode/directory;
+Categories=System;FileManager;

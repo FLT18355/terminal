@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=LibreOffice (Qt6)
+GenericName=Office Suite
+Comment=办公套件 (使用 Qt6 界面)
+Exec=env SAL_USE_VCLPLUGIN=qt6 libreoffice %U
+Icon=libreoffice-startcenter
+Terminal=false
+Type=Application
+Categories=Office;WordProcessor;Spreadsheet;Presentation;
+StartupNotify=true
+MimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/msword;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;application/vnd.ms-excel;application/vnd.openxmlformats-officedocument.presentationml.presentation;application/vnd.ms-powerpoint;

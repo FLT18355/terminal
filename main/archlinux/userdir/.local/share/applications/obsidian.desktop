@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Obsidian(笔记工具)
+Comment=知识管理工具
+Exec=/home/flt18355/Downloads/Obsidian/obsidian --no-sandbox
+Icon=/home/flt18355/Downloads/Obsidian/obsidian.png
+Type=Application
+Categories=Office;Utility;
+StartupNotify=true
+MimeType=text/html;x-scheme-handler/obsidian;
