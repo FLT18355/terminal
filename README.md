@@ -17,6 +17,7 @@ git clone https://github.com/FLT18355/terminal.git
 - **Catppuccin** 主题
   - NeoVim
   - LazyGit
+  - Obsidian
   - ...
 - ***仅供参考***的fish配置
   - abbr
@@ -32,3 +33,9 @@ git clone https://github.com/FLT18355/terminal.git
 
 # Catppuccin Themes
 catppuccin.com
+
+# 正在使用的应用程序
+- Obsidian
+- Konsole
+- QQ
+- mpv
