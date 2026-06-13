@@ -1,5 +1,7 @@
 # FLT18355 - terminal 配置
 
+### 仓库版本: 2026.6.13-repo-4d6ton-fixit
+
 - 里面的配置文件**仅供参考**
 - **FLT18355's** ***Dotfiles***
 
