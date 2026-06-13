@@ -1,0 +1,17 @@
+
+[audacious]
+repeat=TRUE
+
+[audgui]
+filesel_path=/home/flt18355/Music
+
+[echo_plugin]
+delay=350
+feedback=35
+
+[qtui]
+player_height=992
+player_width=1920
+
+[search-tool]
+path=/home/flt18355/音乐

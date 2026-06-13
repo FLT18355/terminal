@@ -40,7 +40,6 @@ alias lsize="ls -lS --color=always"
 alias py="python3"
 alias ipy="ipython"
 alias py2="python2"
-alias pip="pip3"
 
 # 下载工具
 alias wget="wget --show-progress"
@@ -122,12 +121,13 @@ alias gc='git commit'
 alias gd='git diff'
 alias ga.='git add .'
 alias ggap='git gc --aggressive --prune=now'
-alias yt-dlp='yt-dlp --cookies ~/终端专用文件夹/cookies.txt'
+# alias yt-dlp='yt-dlp --cookies ~/终端专用文件夹/cookies.txt'
+alias bili="yt-dlp --cookies /home/flt18355/cookies.txt"
 # 定义一个名为 'gsh' 的命令，一键进入 glibc 环境
 alias gsh='grun --shell'
 alias vi="nvim"
 alias code="/home/flt18355/Downloads/VSCode-linux-arm64/code --no-sandbox"
-alias obsidian="/home/flt18355/Downloads/Obsidian/obsidian --no-sandbox"
+# alias obsidian="/home/flt18355/Downloads/Obsidian/obsidian --no-sandbox"
 # --------------------------------------------
 # 缩写 (Abbreviations - Fish 特色)
 # --------------------------------------------
@@ -151,6 +151,7 @@ set -gx VISUAL nvim
 set -gx PATH $PATH $HOME/.cargo/bin
 set -gx PATH $PATH $HOME/.local/bin
 set -gx PATH $PREFIX/bin $PATH
+set -gx SAL_USE_VCLPLUGIN qt6
 
 # FZF 配置
 set -gx FZF_DEFAULT_OPTS "\
@@ -236,9 +237,6 @@ set -gx EZA_COLORS ignore
 # zoxide init fish | source
 
 # --------------------------------------------
-# fzf 集成
-# --------------------------------------------
-fzf --fish | source
 
 # --------------------------------------------
 # 函数 (Functions)
@@ -362,3 +360,12 @@ eval "$(starship init fish)"
 
 # 设置 Vi 键绑定为默认模式
 # set -g fish_key_bindings fish_vi_key_bindings
+fzf --fish | source
+set -gx HOMEBREW_BOTTLE_DOMAIN https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
+set -gx HOMEBREW_API_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+set -gx HOMEBREW_BOTTLE_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+set -gx HOMEBREW_BREW_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+set -gx HOMEBREW_CORE_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+# 强制使用 API 模式
+set -gx HOMEBREW_INSTALL_FROM_API 1
+export GLYCIN_DISABLE_SANDBOX=1
