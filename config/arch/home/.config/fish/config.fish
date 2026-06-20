@@ -369,3 +369,8 @@ set -gx HOMEBREW_CORE_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homeb
 # 强制使用 API 模式
 set -gx HOMEBREW_INSTALL_FROM_API 1
 export GLYCIN_DISABLE_SANDBOX=1
+
+set -x QT_QPA_PLATFORMTHEME qt5ct
+
+# opencode
+fish_add_path /home/flt18355/.opencode/bin
