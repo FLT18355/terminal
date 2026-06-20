@@ -1,5 +1,5 @@
-NAME="FLT18355's NyarchOS Rolling-26.07 Meow"
-PRETTY_NAME="Neo Yonder Arch Rolling 26.07 Meow"
+NAME="FLTOS"
+PRETTY_NAME="FLTOS World 1.1"
 ID=archarm
 ID_LIKE=arch
 BUILD_ID=rolling
