@@ -318,7 +318,7 @@ def main():
     if not check_7zz():
         error("7zz 命令不可用，请安装 p7zip")
         print("  Termux: pkg install p7zip")
-        print("  Arch:   pacman -S p7zip")
+        print("  Arch:   pacman -S p7zip(如果你装了这个却遇到找不到7zz, 可以使用ln -sf /sbin/7z /sbin/7z")
         sys.exit(1)
 
     # 检查是否提供了文件参数

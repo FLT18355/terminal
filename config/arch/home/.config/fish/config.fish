@@ -173,7 +173,7 @@ alias untgz="tar -xzvf"
 alias unbz2="tar -xjvf"
 alias zipf="zip -r"
 alias unzipf="unzip"
-alias 7zf="7z a"
+alias 7zz="7z"
 alias un7z="7z x"
 
 # ---- 开发工具 ----
