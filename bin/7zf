@@ -1,0 +1,384 @@
+#!/usr/bin/env python3
+"""
+7zf - 7z 文件智能工具 (基于 7zz)
+版本: 1.4
+用法: 7zf <文件/目录> [选项]
+示例:
+  7zf archive.7z                       # 解压
+  7zf -c archive.7z file.txt          # 压缩单个文件
+  7zf -c archive.7z ./folder          # 压缩文件夹
+  7zf archive.7z -l                   # 列出内容
+  7zf archive.7z -t                   # 测试完整性
+  7zf -c archive.7z ./folder -P 123   # 带密码压缩
+  7zf -c archive.7z ./folder -L 9 -m  # 最高压缩率
+  7zf -c archive.7z ./folder -S 100   # 分卷压缩 (每卷100MB)
+  7zf archive.7z -o ./output -f       # 强制覆盖解压
+  7zf -v                              # 显示版本信息
+"""
+
+import os
+import sys
+import subprocess
+import argparse
+import shutil
+from pathlib import Path
+
+# ============================================
+# 版本信息
+# ============================================
+VERSION = "1.4"
+
+# ============================================
+# 颜色定义
+# ============================================
+class Colors:
+    HEADER = '\033[95m'
+    BLUE = '\033[94m'
+    CYAN = '\033[96m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    RESET = '\033[0m'
+
+def info(msg):   print(f"{Colors.CYAN}  ➜{Colors.RESET} {msg}")
+def ok(msg):     print(f"{Colors.GREEN}  ✔{Colors.RESET} {msg}")
+def warn(msg):   print(f"{Colors.YELLOW}  ⚠{Colors.RESET} {msg}")
+def error(msg):  print(f"{Colors.RED}  ✘{Colors.RESET} {msg}")
+def cmd_display(msg): print(f"{Colors.BOLD}{Colors.BLUE}  $ {msg}{Colors.RESET}")
+def header(msg): print(f"\n{Colors.BOLD}{Colors.HEADER}  ═══ {msg} ═══{Colors.RESET}")
+
+# ============================================
+# 显示版本信息
+# ============================================
+def show_version():
+    print(f"{Colors.BOLD}{Colors.HEADER}  7zf v{VERSION}{Colors.RESET}")
+    print(f"  基于 7zz (7-Zip)")
+    print(f"  作者: FLT18355")
+    print(f"  许可证: MIT")
+    sys.exit(0)
+
+# ============================================
+# 检查 7zz 命令
+# ============================================
+def check_7zz():
+    try:
+        subprocess.run(["7zz", "--help"], capture_output=True, check=True)
+        return True
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+
+# ============================================
+# 执行 7zz 命令
+# ============================================
+def run_7zz(cmd: list, show_progress: bool = True) -> bool:
+    cmd_str = ' '.join(cmd)
+    cmd_display(cmd_str)
+
+    try:
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            bufsize=1
+        )
+
+        for line in process.stdout:
+            line = line.strip()
+            if not line:
+                continue
+
+            if not show_progress and ("ing archive" in line or "ing file" in line):
+                continue
+
+            if "Everything is Ok" in line:
+                ok("✅ 操作完成！")
+            elif "Wrong password" in line or "Can not open encrypted archive" in line:
+                error("❌ 密码错误，请检查 -P 参数")
+                process.terminate()
+                return False
+            elif "Error" in line and "WARNING" not in line:
+                error(f"❌ {line}")
+            elif "WARNING" in line:
+                warn(f"⚠️ {line}")
+            else:
+                print(f"  {line}")
+
+        process.wait()
+        return process.returncode == 0
+
+    except FileNotFoundError:
+        error("找不到 7zz 命令，请安装 p7zip")
+        print("  Termux: pkg install p7zip")
+        print("  Arch:   pacman -S p7zip")
+        return False
+    except Exception as e:
+        error(f"执行失败: {e}")
+        return False
+
+# ============================================
+# 压缩功能
+# ============================================
+def compress_archive(args) -> bool:
+    header("📦 压缩中")
+
+    if not args.target:
+        error("压缩模式需要指定目标文件/目录")
+        return False
+
+    if not os.path.exists(args.target):
+        error(f"目标 '{args.target}' 不存在")
+        return False
+
+    cmd = ["7zz", "a"]
+
+    # 密码
+    if args.password:
+        cmd.append(f"-p{args.password}")
+
+    # 压缩级别
+    if args.level:
+        cmd.append(f"-mx={args.level}")
+
+    # 压缩类型
+    if args.type:
+        cmd.append(f"-t{args.type}")
+
+    # 输出文件
+    output_file = args.file
+    if not output_file.endswith(f'.{args.type}'):
+        output_file += f'.{args.type}'
+
+    # 分卷
+    if args.split:
+        cmd.append(f"-v{args.split}M")
+
+    # 排除文件
+    for exclude in args.exclude or []:
+        cmd.append(f"-x!{exclude}")
+
+    # 多线程
+    if args.threads:
+        cmd.append(f"-mmt={args.threads}")
+
+    # 删除源文件 (7zz 原生支持)
+    if args.delete:
+        cmd.append("-sdel")
+
+    # 使用 UTF-8 编码
+    if args.utf8:
+        cmd.append("-sccUTF-8")
+
+    # 显示更多信息
+    if args.verbose:
+        cmd.append("-bb3")
+
+    cmd.append(output_file)
+    cmd.append(args.target)
+
+    return run_7zz(cmd)
+
+# ============================================
+# 解压功能
+# ============================================
+def extract_archive(args) -> bool:
+    header("📦 解压中")
+
+    cmd = ["7zz", "x"]
+
+    # 密码
+    if args.password:
+        cmd.append(f"-p{args.password}")
+
+    # 输出目录
+    if args.output:
+        Path(args.output).mkdir(parents=True, exist_ok=True)
+        cmd.append(f"-o{args.output}")
+
+    # 详细输出
+    if args.verbose:
+        cmd.append("-bb3")
+    else:
+        cmd.append("-bb1")
+
+    # 覆盖模式
+    if args.force:
+        cmd.append("-aoa")  # 覆盖所有
+    else:
+        cmd.append("-aos")  # 跳过已存在的
+
+    # 保持文件时间
+    if args.preserve:
+        cmd.append("-stl")
+
+    # 使用 UTF-8 编码
+    if args.utf8:
+        cmd.append("-sccUTF-8")
+
+    # 显示文件哈希值
+    if args.hash:
+        cmd.append("-scrcSHA256")
+
+    cmd.append(args.file)
+    return run_7zz(cmd)
+
+# ============================================
+# 列出内容 (增强版)
+# ============================================
+def list_archive(file: str, password: str = None, technical: bool = False) -> bool:
+    header("📋 压缩包内容")
+    cmd = ["7zz", "l", file]
+    if password:
+        cmd.append(f"-p{password}")
+    if technical:
+        cmd.append("-slt")  # 显示技术信息 (压缩率、时间等)
+    return run_7zz(cmd, show_progress=False)
+
+# ============================================
+# 测试完整性 (增强版)
+# ============================================
+def test_archive(file: str, password: str = None, hash_check: bool = False) -> bool:
+    header("🔍 测试压缩包完整性")
+    cmd = ["7zz", "t", file]
+    if password:
+        cmd.append(f"-p{password}")
+    if hash_check:
+        cmd.append("-scrcSHA256")
+    return run_7zz(cmd, show_progress=False)
+
+# ============================================
+# 计算哈希值
+# ============================================
+def hash_file(file: str, algorithm: str = "SHA256") -> bool:
+    header(f"🔐 计算哈希值 ({algorithm})")
+    cmd = ["7zz", "h", f"-scrc{algorithm}", file]
+    return run_7zz(cmd, show_progress=False)
+
+# ============================================
+# 主函数
+# ============================================
+def main():
+    parser = argparse.ArgumentParser(
+        prog="7zf",
+        description=f"{Colors.BOLD}7z 智能工具 (基于 7zz){Colors.RESET}",
+        epilog="示例:\n"
+               f"  7zf archive.7z                    # 解压\n"
+               f"  7zf -c archive.7z file.txt       # 压缩\n"
+               f"  7zf archive.7z -l -T             # 列出内容 (技术信息)\n"
+               f"  7zf archive.7z --hash            # 计算哈希值\n"
+               f"  7zf -c archive.7z ./folder -m    # 多线程压缩\n"
+               f"  7zf -c archive.7z ./folder -S 100 # 分卷压缩\n"
+               f"  7zf -v                          # 显示版本信息",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    # 版本信息
+    parser.add_argument("-v", "--version", action="store_true", help="显示版本信息")
+    parser.add_argument("-V", "--verbose", action="store_true", help="显示详细信息")
+
+    # 基本参数
+    parser.add_argument("file", nargs="?", help="压缩包文件")
+    parser.add_argument("-c", "--compress", action="store_true", help="压缩模式")
+    parser.add_argument("target", nargs="?", help="压缩目标", default=None)
+
+    # 通用参数
+    parser.add_argument("-P", "--password", help="密码", default=None)
+    parser.add_argument("-d", "--delete", action="store_true", help="删除源文件")
+    parser.add_argument("-U", "--utf8", action="store_true", help="使用 UTF-8 编码")
+
+    # 解压参数
+    parser.add_argument("-o", "--output", help="解压输出目录", default=None)
+    parser.add_argument("-f", "--force", action="store_true", help="强制覆盖")
+    parser.add_argument("-p", "--preserve", action="store_true", help="保持文件时间")
+    parser.add_argument("--hash", action="store_true", help="解压时显示哈希值")
+
+    # 压缩参数
+    parser.add_argument("-L", "--level", type=int, choices=range(1, 10), help="压缩级别 (1-9)")
+    parser.add_argument("-T", "--type", choices=["7z", "zip", "tar", "gzip", "bzip2", "xz"], default="7z", help="压缩类型")
+    parser.add_argument("-S", "--split", type=float, help="分卷大小 (MB)")
+    parser.add_argument("-x", "--exclude", action="append", help="排除文件")
+    parser.add_argument("-m", "--threads", type=int, help="多线程数 (自动检测: 0)")
+
+    # 其他功能
+    parser.add_argument("-l", "--list", action="store_true", help="列出压缩包内容")
+    parser.add_argument("-t", "--test", action="store_true", help="测试压缩包完整性")
+    parser.add_argument("-Tt", "--technical", action="store_true", help="显示技术信息 (配合 -l)")
+    parser.add_argument("--checksum", choices=["CRC32", "CRC64", "SHA256", "SHA1", "XXH64", "BLAKE2SP"], default="SHA256", help="计算文件哈希值")
+    parser.add_argument("--calc-hash", action="store_true", help="计算哈希值模式")
+
+    args = parser.parse_args()
+
+    # ===== 版本信息检查（提前执行） =====
+    if args.version:
+        show_version()
+
+    print(f"\n{Colors.BOLD}{Colors.HEADER}  📦 7z 工具 (7zf) v{VERSION}{Colors.RESET}")
+
+    if not check_7zz():
+        error("7zz 命令不可用，请安装 p7zip")
+        print("  Termux: pkg install p7zip")
+        print("  Arch:   pacman -S p7zip")
+        sys.exit(1)
+
+    # 检查是否提供了文件参数
+    if not args.file:
+        error("请指定要操作的文件")
+        print(f"  使用 {Colors.CYAN}7zf -h{Colors.RESET} 查看帮助")
+        sys.exit(1)
+
+    # 哈希计算模式
+    if args.calc_hash:
+        if not os.path.isfile(args.file):
+            error(f"文件 '{args.file}' 不存在")
+            sys.exit(1)
+        success = hash_file(args.file, args.checksum)
+        sys.exit(0 if success else 1)
+
+    # 列出内容
+    if args.list:
+        if not os.path.isfile(args.file):
+            error(f"文件 '{args.file}' 不存在")
+            sys.exit(1)
+        success = list_archive(args.file, args.password, args.technical)
+        sys.exit(0 if success else 1)
+
+    # 测试完整性
+    if args.test:
+        if not os.path.isfile(args.file):
+            error(f"文件 '{args.file}' 不存在")
+            sys.exit(1)
+        success = test_archive(args.file, args.password, args.hash)
+        sys.exit(0 if success else 1)
+
+    # 压缩模式
+    if args.compress:
+        if not args.target:
+            error("压缩模式需要指定目标")
+            sys.exit(1)
+        success = compress_archive(args)
+        sys.exit(0 if success else 1)
+
+    # 解压模式 (默认)
+    if not os.path.isfile(args.file):
+        error(f"文件 '{args.file}' 不存在")
+        sys.exit(1)
+
+    success = extract_archive(args)
+
+    # 解压后删除 (如果 -d 且解压成功)
+    if success and args.delete and not args.compress:
+        try:
+            os.remove(args.file)
+            info(f"已删除源文件: {args.file}")
+        except OSError as e:
+            warn(f"删除失败: {e}")
+
+    sys.exit(0 if success else 1)
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n[!] 用户中断")
+        sys.exit(130)
