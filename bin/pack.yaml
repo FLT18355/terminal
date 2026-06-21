@@ -20,6 +20,13 @@ packages:
     author: linxuan-sys
     permission: 755
     last_updated: 2026-06-21
+    
+  - name: list-packages
+    version: 1.0
+    description: 打印出所有已安装的包
+    author: FLT18355
+    permission: 755
+    last_updated: 2026-06-22
 
 info:
  - author: FLT18355
