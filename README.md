@@ -1,6 +1,6 @@
 # FLT18355 - Terminal Config
 
-**仓库版本 / Repo Version:** `2026.6.14-repo-1ecba6-fixit`
+**仓库版本 / Repo Version:** `1.2`
 
 ---
 
