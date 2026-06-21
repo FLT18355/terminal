@@ -1,0 +1,205 @@
+#!/usr/bin/env python3
+"""
+unf - 智能解压工具 (Uncompress File)
+
+用法:
+    unf --格式 文件名 [选项]
+
+示例:
+    unf --zip archive.zip -P "password" -d
+    unf --tar-gz package.tar.gz -o ./output
+    unf --help
+"""
+
+import os
+import sys
+import subprocess
+import argparse
+from pathlib import Path
+
+# ============================================================
+# 颜色定义
+# ============================================================
+class Colors:
+    HEADER  = '\033[95m'
+    BLUE    = '\033[94m'
+    CYAN    = '\033[96m'
+    GREEN   = '\033[92m'
+    YELLOW  = '\033[93m'
+    RED     = '\033[91m'
+    BOLD    = '\033[1m'
+    RESET   = '\033[0m'
+
+def info(msg):   print(f"{Colors.CYAN}  ➜{Colors.RESET} {msg}")
+def ok(msg):     print(f"{Colors.GREEN}  ✔{Colors.RESET} {msg}")
+def warn(msg):   print(f"{Colors.YELLOW}  ⚠{Colors.RESET} {msg}")
+def error(msg):  print(f"{Colors.RED}  ✘{Colors.RESET} {msg}")
+
+# ============================================================
+# 格式支持表
+# ============================================================
+SUPPORTED_TYPES = {
+    # tar 系列
+    "tar-gz":   ["tar", "-xzf"],
+    "tgz":      ["tar", "-xzf"],
+    "tar-xz":   ["tar", "-xJf"],
+    "txz":      ["tar", "-xJf"],
+    "tar-zst":  ["tar", "--zstd", "-xf"],
+    "tar-lz4":  ["tar", "-xf"],
+    "tar-bz2":  ["tar", "-xjf"],
+    "tbz2":     ["tar", "-xjf"],
+    "tar":      ["tar", "-xf"],
+    # 其他压缩格式
+    "zip":      ["unzip"],
+    "7z":       ["7z", "x"],
+    "rar":      ["unrar", "x"],
+    "xz":       ["xz", "-d"],
+    "bz2":      ["bzip2", "-d"],
+    "zst":      ["zstd", "-d"],
+    "lz4":      ["lz4", "-d"],
+    "gz":       ["gunzip"],
+}
+
+def get_display_name(fmt: str) -> str:
+    """获取格式的友好显示名称"""
+    names = {
+        "tar-gz": "tar.gz", "tgz": "tgz", "tar-xz": "tar.xz", "txz": "txz",
+        "tar-zst": "tar.zst", "tar-lz4": "tar.lz4", "tar-bz2": "tar.bz2",
+        "tbz2": "tbz2", "tar": "tar", "zip": "zip", "7z": "7z",
+        "rar": "rar", "xz": "xz", "bz2": "bz2", "zst": "zst",
+        "lz4": "lz4", "gz": "gz"
+    }
+    return names.get(fmt, fmt)
+
+# ============================================================
+# 执行命令
+# ============================================================
+def run_command(cmd: list) -> bool:
+    """执行命令并显示状态"""
+    cmd_str = ' '.join(cmd)
+    print(f"  $ {cmd_str}")
+    try:
+        result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+        if result.stdout:
+            for line in result.stdout.strip().split('\n'):
+                if line:
+                    print(f"  {line}")
+        if result.stderr:
+            for line in result.stderr.strip().split('\n'):
+                if line and "warning" not in line.lower():
+                    warn(line)
+        return True
+    except subprocess.CalledProcessError as e:
+        error(f"命令执行失败 (退出码 {e.returncode})")
+        if e.stderr:
+            for line in e.stderr.strip().split('\n'):
+                if line:
+                    print(f"  {line}")
+        return False
+    except FileNotFoundError:
+        error(f"找不到命令 '{cmd[0]}'，请先安装对应的解压工具")
+        return False
+
+# ============================================================
+# 主函数
+# ============================================================
+def main():
+    parser = argparse.ArgumentParser(
+        prog="unf",
+        description=f"{Colors.BOLD}智能解压工具{Colors.RESET} — 一条命令解压所有格式",
+        epilog=f"示例: {Colors.CYAN}unf --tar-gz package.tar.gz{Colors.RESET}",
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    # 压缩格式选项（必须且只能选一个）
+    format_group = parser.add_argument_group("压缩格式 (必须指定且只能选一个)")
+    for fmt in sorted(SUPPORTED_TYPES.keys()):
+        display_name = get_display_name(fmt)
+        format_group.add_argument(
+            f"--{fmt}",
+            action="store_true",
+            help=f"解压 {Colors.CYAN}{display_name}{Colors.RESET} 格式"
+        )
+
+    # 其他参数
+    parser.add_argument("file", help="要解压的压缩文件")
+    parser.add_argument("-o", "--output", help="指定输出目录 (默认解压到当前目录)")
+    parser.add_argument("-d", "--delete", action="store_true", help="解压后删除源文件")
+    parser.add_argument("-P", "--password", help="提供解压密码 (仅适用于 zip, 7z, rar)")
+
+    args = parser.parse_args()
+
+    # 显示标题
+    print(f"\n{Colors.BOLD}{Colors.HEADER}  📦 解压工具 (unf){Colors.RESET}\n")
+
+    # ---- 检查文件 ----
+    if not os.path.isfile(args.file):
+        error(f"文件 '{args.file}' 不存在")
+        sys.exit(1)
+
+    if not os.access(args.file, os.R_OK):
+        error(f"文件 '{args.file}' 没有读取权限")
+        sys.exit(1)
+
+    # ---- 解析格式 ----
+    format_type = None
+    for fmt in SUPPORTED_TYPES.keys():
+        if getattr(args, fmt.replace("-", "_")):
+            format_type = fmt
+            break
+
+    if not format_type:
+        error("请指定压缩格式 (使用 --help 查看支持的格式)")
+        sys.exit(1)
+
+    info(f"文件: {Colors.BOLD}{args.file}{Colors.RESET}")
+    info(f"格式: {Colors.BOLD}{get_display_name(format_type)}{Colors.RESET}")
+
+    # ---- 构建命令 ----
+    cmd = SUPPORTED_TYPES[format_type].copy()
+
+    # 处理密码
+    if args.password:
+        if format_type == "zip":
+            cmd.extend(["-P", args.password])
+        elif format_type == "7z":
+            cmd.append(f"-p{args.password}")
+        elif format_type == "rar":
+            cmd.append(f"-p{args.password}")
+        else:
+            warn(f"格式 {format_type} 不支持密码参数，已忽略")
+
+    # 处理输出目录
+    if args.output:
+        output_dir = args.output
+        Path(output_dir).mkdir(parents=True, exist_ok=True)
+        info(f"输出: {Colors.BOLD}{output_dir}{Colors.RESET}")
+
+        if format_type == "zip":
+            cmd.extend(["-d", output_dir])
+        elif format_type == "7z":
+            cmd.append(f"-o{output_dir}")
+        elif format_type == "rar":
+            cmd.append(output_dir)
+        elif format_type.startswith("tar"):
+            cmd.extend(["-C", output_dir])
+
+    cmd.append(args.file)
+
+    # ---- 执行 ----
+    print()
+    if run_command(cmd):
+        ok("解压完成！🎉")
+        if args.delete:
+            try:
+                os.remove(args.file)
+                info(f"已删除源文件: {args.file}")
+            except OSError as e:
+                warn(f"删除源文件失败: {e}")
+        sys.exit(0)
+    else:
+        error("解压失败 ❌")
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
