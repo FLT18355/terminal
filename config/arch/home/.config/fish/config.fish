@@ -3,157 +3,22 @@
 # ============================================
 
 # --------------------------------------------
-# 别名 (Aliases)
+# 环境变量
 # --------------------------------------------
-alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
-alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
 
-# 系统优化
-alias ST='py ~/终端专用文件夹/f-tools/ST.py'
-alias 中国日历='py ~/终端专用文件夹/f-tools/中国日历.py'
-alias ydd='py ~/终端专用文件夹/f-tools/yd下载器.py'
-alias 清理='bash ~/.termux/boot/01-clean-termux'
-alias clock='clock-rs | lolcat'
-
-alias tp="cd ~/终端专用文件夹"
-alias td="cd /storage/emulated/0/Download/"
-alias th='cd ~'
-alias troot="cd /"
-alias tsd="cd /storage/emulated/0/"
-alias tdc="cd /storage/emulated/0/DCIM/"
-alias tpic="cd /storage/emulated/0/Pictures/"
-
-alias upd="oma upgrade && oma upgrade -y && oma refresh"
-alias clean="oma clean && apt autoremove -y && pkg clean && apt clean"
-alias list="pkg list-installed | bat"
-alias prw='pip-review --local --interactive'
-alias sa="mkdir -p /data/data/com.termux/cache/apt/archives && upd && clean && go clean -modcache && pip cache purge && go clean -cache && prw && pip cache purge"
-
-# 文件操作
-alias li="LS_COLORS= eza --icons --color=always -a"
-alias ll="LS_COLORS= eza --icons --color=always -la"
-alias la="ls -A --color=always"
-alias lt="ls -lt --color=always"
-alias lsize="ls -lS --color=always"
-
-# 开发工具
-alias py="python3"
-alias ipy="ipython"
-alias py2="python2"
-
-# 下载工具
-alias wget="wget --show-progress"
-alias curl-head="curl -I"
-alias down="aria2c -x 16 -s 16"
-
-alias cl='clear && echo "󰄛 打扫干净啦！" && ci'
-
-# 压缩解压
-alias untar="tar -xvf"
-alias untgz="tar -xzvf"
-alias unbz2="tar -xjvf"
-alias zipf="zip -r"
-alias unzipf="unzip"
-alias 7zf="7z a"
-alias un7z="7z x"
-
-# 文件操作增强
-alias mkdir="mkdir -p"
-alias cp="cp -iv"
-alias mv="mv -iv"
-alias rm="rm -i"
-alias ln="ln -s"
-
-# 计时工具
-alias timer='time read'
-alias stopwatch='time cat'
-alias countdown='seq'
-
-# 目录操作
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....='cd ../../../..'
-
-# 查找增强
-alias ftext="grep -r --include='*.txt'"
-alias fcode="grep -r --include='*.{py,js,c}'"
-
-# 系统维护
-alias sync="sync && echo '同步完成'"
-alias reboot="reboot"
-alias poweroff="poweroff"
-alias df="df -h"
-alias du="du -h"
-alias du-max="du -sh * | sort -hr"
-alias vs='python -m visidata'
-
-# 文件管理
-alias mk="mkdir -p"
-alias tch="touch"
-alias head="head -n"
-alias tail="tail -n"
-
-# Python 快捷
-alias py3="python3"
-alias py2="python2"
-alias grep="grep --color=auto"
-
-alias e='exit' # 退出快捷
-
-# 工具
-alias glow='glow -s ~/.config/glow/catppuccin-mocha.json'
-alias vfishrc="vim ~/.config/fish/config.fish && ci"
-alias lf="yazi"
-alias ncat='nyancat'
-# alias ze='zellij'
-alias tldr='tldr -L zh'
-alias ffc='fastfetch'
-alias fs="fish"
-alias fsr="fisher"
-
-# Git 别名
-alias gs='git status'
-alias ga='git add'
-alias gp='git push'
-alias gl='git pull'
-alias gc='git commit'
-alias gd='git diff'
-alias ga.='git add .'
-alias ggap='git gc --aggressive --prune=now'
-# alias yt-dlp='yt-dlp --cookies ~/终端专用文件夹/cookies.txt'
-alias bili="yt-dlp --cookies /home/flt18355/cookies.txt"
-# 定义一个名为 'gsh' 的命令，一键进入 glibc 环境
-alias gsh='grun --shell'
-alias vi="nvim"
-alias code="/home/flt18355/Downloads/VSCode-linux-arm64/code --no-sandbox"
-# alias obsidian="/home/flt18355/Downloads/Obsidian/obsidian --no-sandbox"
-# --------------------------------------------
-# 缩写 (Abbreviations - Fish 特色)
-# --------------------------------------------
-abbr --add gst "git status"
-abbr --add ga "git add"
-abbr --add gp "git push"
-abbr --add gl "git pull"
-abbr --add gc "git commit"
-abbr --add gd "git diff"
-abbr --add g git
-abbr --add tma "am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity"
-abbr --add gga "git gc --aggressive"
-abbr --add gpa "git push && git gc --aggressive"
-
-# --------------------------------------------
-# 环境变量 (set -gx)
-# --------------------------------------------
-set -gx PATH $PATH $HOME/go/bin
+# 编辑器
 set -gx EDITOR nvim
 set -gx VISUAL nvim
+
+# PATH
+set -gx PATH $PATH $HOME/go/bin
 set -gx PATH $PATH $HOME/.cargo/bin
 set -gx PATH $PATH $HOME/.local/bin
 set -gx PATH $PREFIX/bin $PATH
-set -gx SAL_USE_VCLPLUGIN qt6
+fish_add_path ~/bin
+fish_add_path /home/flt18355/.opencode/bin
 
-# FZF 配置
+# FZF
 set -gx FZF_DEFAULT_OPTS "\
 --highlight-line \
 --info=inline-right \
@@ -193,19 +58,9 @@ set -gx FZF_DEFAULT_OPTS "\
 --color=selected-fg:#CDD6F4 \
 --color=scrollbar:#6C7086 \
 --color=separator:#6C7086"
-
 set -gx FZF_CTRL_T_OPTS "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 
-# 历史配置 (Fish 用环境变量)
-set -gx HISTFILE ~/.local/share/fish/fish_history
-set -gx fish_history_max 500000
-
-# Carapace 补全
-# set -gx CARAPACE_BRIDGES "zsh,fish,bash,inshellisense"
-# Fish 中 Carapace 需要这样加载
-# carapace _carapace | source
-
-# Bat 主题
+# Bat
 set -gx BAT_THEME "Catppuccin Mocha"
 
 # Man 手册彩色显示
@@ -218,31 +73,190 @@ set -gx LESS_TERMCAP_so (printf '\E[01;44;33m')
 set -gx LESS_TERMCAP_ue (printf '\E[0m')
 set -gx LESS_TERMCAP_us (printf '\E[1;32m')
 
-fish_add_path ~/bin
-# 语言设置
-set -gx TLDR_LANGUAGE zh
-
-# 用户信息
-
-# 光标设置
-set -gx KEYTIMEOUT 10
-
-# EZA 配置
+# EZA
 set -gx EZA_COLORS ignore
 
+# 语言 / 本地化
+set -gx TLDR_LANGUAGE zh
+
+# Qt / 终端
+set -gx SAL_USE_VCLPLUGIN qt6
+set -x QT_QPA_PLATFORMTHEME qt5ct
+
+# Fish 历史
+set -gx HISTFILE ~/.local/share/fish/fish_history
+
+# 光标
+set -gx KEYTIMEOUT 10
+
+# Homebrew (Tsinghua 镜像)
+set -gx HOMEBREW_BOTTLE_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
+set -gx HOMEBREW_API_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
+set -gx HOMEBREW_BREW_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
+set -gx HOMEBREW_CORE_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
+set -gx HOMEBREW_INSTALL_FROM_API 1
+
+# 其他
+set -gx GLYCIN_DISABLE_SANDBOX 1
+# set -gx CARAPACE_BRIDGES "zsh,fish,bash,inshellisense"
+
 # --------------------------------------------
-# Zoxide (目录跳转)
+# Carapace 补全 (注释掉)
 # --------------------------------------------
-# Fish 中 zoxide 的初始化
+# carapace _carapace | source
+
+# --------------------------------------------
+# Zoxide (注释掉)
+# --------------------------------------------
 # zoxide init fish | source
 
 # --------------------------------------------
+# 插件初始化
+# --------------------------------------------
+fzf --fish | source
+eval "$(starship init fish)"
 
 # --------------------------------------------
-# 函数 (Functions)
+# 主题 / 提示符
+# --------------------------------------------
+fish_config theme choose catppuccin-mocha
+
+# --------------------------------------------
+# 别名
 # --------------------------------------------
 
-# sa-t 函数
+# ---- Termux 专属 ----
+alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
+alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
+alias 清理='bash ~/.termux/boot/01-clean-termux'
+
+# ---- 目录导航 ----
+alias tp="cd ~/终端专用文件夹"
+alias td="cd /storage/emulated/0/Download/"
+alias th='cd ~'
+alias troot="cd /"
+alias tsd="cd /storage/emulated/0/"
+alias tdc="cd /storage/emulated/0/DCIM/"
+alias tpic="cd /storage/emulated/0/Pictures/"
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....='cd ../../../..'
+
+# ---- 包管理 ----
+alias upd="oma upgrade && oma upgrade -y && oma refresh"
+alias clean="oma clean && apt autoremove -y && pkg clean && apt clean"
+alias list="pkg list-installed | bat"
+alias prw='pip-review --local --interactive'
+
+# ---- 文件列表 ----
+alias li="LS_COLORS= eza --icons --color=always -a"
+alias ll="LS_COLORS= eza --icons --color=always -la"
+alias la="ls -A --color=always"
+alias lt="ls -lt --color=always"
+alias lsize="ls -lS --color=always"
+
+# ---- 文件操作 ----
+alias mkdir="mkdir -p"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -i"
+alias ln="ln -s"
+alias mk="mkdir -p"
+alias tch="touch"
+alias head="head -n"
+alias tail="tail -n"
+
+# ---- 压缩解压 ----
+alias untar="tar -xvf"
+alias untgz="tar -xzvf"
+alias unbz2="tar -xjvf"
+alias zipf="zip -r"
+alias unzipf="unzip"
+alias 7zf="7z a"
+alias un7z="7z x"
+
+# ---- 开发工具 ----
+alias py="python3"
+alias py3="python3"
+alias py2="python2"
+alias ipy="ipython"
+alias vi="nvim"
+alias code="/home/flt18355/Downloads/VSCode-linux-arm64/code --no-sandbox"
+alias vs='python -m visidata'
+alias grep="grep --color=auto"
+
+# ---- 下载工具 ----
+alias wget="wget --show-progress"
+alias curl-head="curl -I"
+alias down="aria2c -x 16 -s 16"
+alias bili="yt-dlp --cookies /home/flt18355/cookies.txt"
+# alias yt-dlp='yt-dlp --cookies ~/终端专用文件夹/cookies.txt'
+
+# ---- Git ----
+alias gs='git status'
+alias ga='git add'
+alias gp='git push'
+alias gl='git pull'
+alias gc='git commit'
+alias gd='git diff'
+alias ga.='git add .'
+alias ggap='git gc --aggressive --prune=now'
+alias gsh='grun --shell'
+
+# ---- 系统维护 ----
+alias sync="sync && echo '同步完成'"
+alias reboot="reboot"
+alias poweroff="poweroff"
+alias df="df -h"
+alias du="du -h"
+alias du-max="du -sh * | sort -hr"
+alias cl='clear && echo "󰄛 打扫干净啦！" && ci'
+
+# ---- 搜索 ----
+alias ftext="grep -r --include='*.txt'"
+alias fcode="grep -r --include='*.{py,js,c}'"
+
+# ---- 工具 ----
+alias glow='glow -s ~/.config/glow/catppuccin-mocha.json'
+alias vfishrc="vim ~/.config/fish/config.fish && ci"
+alias lf="yazi"
+alias ncat='nyancat'
+# alias ze='zellij'
+alias tldr='tldr -L zh'
+alias ffc='fastfetch'
+alias fs="fish"
+alias fsr="fisher"
+alias clock='clock-rs | lolcat'
+alias timer='time read'
+alias stopwatch='time cat'
+alias countdown='seq'
+alias e='exit'
+
+# ---- Termux 工具 ----
+alias ST='py ~/终端专用文件夹/f-tools/ST.py'
+alias 中国日历='py ~/终端专用文件夹/f-tools/中国日历.py'
+alias ydd='py ~/终端专用文件夹/f-tools/yd下载器.py'
+
+# --------------------------------------------
+# 缩写 (Abbreviations)
+# --------------------------------------------
+abbr --add gst "git status"
+abbr --add ga "git add"
+abbr --add gp "git push"
+abbr --add gl "git pull"
+abbr --add gc "git commit"
+abbr --add gd "git diff"
+abbr --add g git
+abbr --add gga "git gc --aggressive"
+abbr --add gpa "git push && git gc --aggressive"
+abbr --add tma "am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity"
+
+# --------------------------------------------
+# 函数
+# --------------------------------------------
+
+# sa：系统全面优化
 function sa
     echo 系统优化中 | lolcat
     echo "正在创建配置目录..." | lolcat
@@ -274,13 +288,11 @@ function sa
     echo "所有执行程序都运行完毕,感谢您的使用,Bye" | lolcat
 end
 
-# 遮蔽原始的 pacman 命令
+# pacman / npkg (遮蔽原始 pacman，用 npkg 替代)
 function pacman
     echo "错误: 'pacman' 命令已被禁用。请使用 'npkg' 代替。" >&2
     return 1
 end
-
-# 创建 npkg 命令作为替代
 function npkg
     if contains -- -h $argv; or contains -- --help $argv
         /usr/bin/pacman $argv | sed s/pacman/npkg/g
@@ -289,14 +301,14 @@ function npkg
     end
 end
 
-# kitty终端启动
+# kitty 终端启动
 function open_kitty
     export DISPLAY=:0
     openbox &
     kitty
 end
 
-# Yazi 包装函数：退出时自动切换到浏览的目录
+# Yazi：退出时自动切换到浏览目录
 function y
     set -l tmp (mktemp -t "yazi-cwd.XXXXXX")
     yazi $argv --cwd-file=$tmp
@@ -307,70 +319,39 @@ function y
     rm -f $tmp
 end
 
-# v 函数 (打开 vim)
+# v：打开 nvim 并恢复光标
 function v
     vi $argv[1]
     ci
 end
 
-# 调用 Termux 的 command-not-found 工具
+# ci：恢复光标为闪烁竖线
+function ci
+    echo -ne '\e[5 q'
+end
+
+# Termux command-not-found
 function fish_command_not_found
     /data/data/com.termux/files/usr/libexec/termux/command-not-found $argv[1]
 end
 
 # --------------------------------------------
-# 光标设置
+# Vi 模式 (默认禁用)
 # --------------------------------------------
-# 设置光标为闪烁的竖线
-# echo -ne '\e[5 q'
-
-# ci 函数：恢复光标
-function ci
-    echo -ne '\e[5 q'
-end
+# set -g fish_key_bindings fish_vi_key_bindings
 
 # --------------------------------------------
-# 启动画面(欢迎语)[启动运行]
+# 启动时运行
 # --------------------------------------------
+# am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity
 
-# echo " "
-# am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity # 每次启动的时候启动termux:api
-# 设置 XDG_RUNTIME_DIR（用于 Wayland 合成器）
+# XDG_RUNTIME_DIR（Wayland）
 if not set -q XDG_RUNTIME_DIR
     set -gx XDG_RUNTIME_DIR /tmp/runtime-$USER
     mkdir -p $XDG_RUNTIME_DIR
     chmod 700 $XDG_RUNTIME_DIR
 end
-export PULSE_SERVER=127.0.0.1
+
+set -gx PULSE_SERVER 127.0.0.1
 set fish_greeting
 ffc
-# --------------------------------------------
-# 提示符 (Prompt)
-# --------------------------------------------
-
-# --------------------------------------------
-# 主题
-# --------------------------------------------
-fish_config theme choose catppuccin-mocha
-eval "$(starship init fish)"
-
-# ============================================
-# Vi 模式完整配置 (默认启用及增强)
-# ============================================
-
-# 设置 Vi 键绑定为默认模式
-# set -g fish_key_bindings fish_vi_key_bindings
-fzf --fish | source
-set -gx HOMEBREW_BOTTLE_DOMAIN https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles
-set -gx HOMEBREW_API_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
-set -gx HOMEBREW_BOTTLE_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
-set -gx HOMEBREW_BREW_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
-set -gx HOMEBREW_CORE_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
-# 强制使用 API 模式
-set -gx HOMEBREW_INSTALL_FROM_API 1
-export GLYCIN_DISABLE_SANDBOX=1
-
-set -x QT_QPA_PLATFORMTHEME qt5ct
-
-# opencode
-fish_add_path /home/flt18355/.opencode/bin
