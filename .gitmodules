@@ -1,0 +1,3 @@
+[submodule "subdir"]
+	path = subdir
+	url = git@github.com:FLT18355/My-Catppuccin-Userstyles.git
