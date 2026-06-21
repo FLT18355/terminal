@@ -1,0 +1,26 @@
+
+packages:
+  - name: unf
+    version: 1.1
+    description: 一个简单的解压压缩包工具
+    author: FLT18355
+    permission: 755
+    last_updated: 2026-06-21
+
+  - name: 7zf
+    version: 1.4
+    description: 美化后的7zz
+    author: FLT18355
+    permission: 755
+    last_updated: 2026-06-21
+
+  - name: gits
+    version: unknown
+    description: unknown
+    author: linxuan-sys
+    permission: 755
+    last_updated: 2026-06-21
+
+info:
+ - author: FLT18355
+ - repo: github.com/FLT18355/terminal
