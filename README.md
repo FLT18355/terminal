@@ -51,7 +51,7 @@ terminal/
 ## 🚀 安装指南 / Setup
 
 > 关于目录里面的setup.sh
-> 目前只是个半成品，千万不要用
+> 目前只是个半成品，千万不要用 /
 > Regarding the setup.sh file in the directory:
 > It's currently only half-finished – do not use it under any circumstances.
 
