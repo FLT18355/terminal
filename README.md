@@ -1,6 +1,6 @@
 # FLT18355 - Terminal Config
 
-**仓库版本 / Repo Version:** `1.2`
+**仓库版本 / Repo Version:** `1.2.1`
 
 ---
 
