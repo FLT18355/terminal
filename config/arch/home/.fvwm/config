@@ -447,8 +447,8 @@ Key F4 A M Close
 # Lock
 Key l A C Exec bash ~/.scripts/lock
 
-# Maximize a window B)
-Key t WT 4 Maximize
+# Maximize
+Key F A M Maximize
 
 # Generic Alt+Tab switcher
 Key tab A 1 Switcher

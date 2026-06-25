@@ -47,7 +47,6 @@ return {
             Keyword = { style = { "bold" } },
             Repeat = { style = { "bold" } },
             statusline = { bg = nil },
-            DashboardHeader = { fg = mocha.mauve },
 
             DiagnosticUnderlineError = { style = { "undercurl", "bold" }, sp = mocha.red },
             DiagnosticUnderlineWarn = { style = { "undercurl" }, sp = mocha.yellow },

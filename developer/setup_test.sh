@@ -321,4 +321,4 @@ echo "  source $CONFIG_FILE"
 echo ""
 echo "或者重新打开终端即可使用 'z' 命令跳转目录。"
 
-sudo pacman -S fish
+sudo pacman -S fish nano
