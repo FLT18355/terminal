@@ -48,6 +48,12 @@ return {
             Repeat = { style = { "bold" } },
             statusline = { bg = nil },
 
+            WinBar = { fg = mocha.blue, bg = mocha.surface0 },
+            WinBarNC = { fg = mocha.overlay0, bg = mocha.surface0 },
+
+            CursorLine = { bg = mocha.surface0 }, -- 让当前行更柔和
+            StatusLine = { bg = nil, fg = mocha.text }, -- 状态栏完全透明
+
             DiagnosticUnderlineError = { style = { "undercurl", "bold" }, sp = mocha.red },
             DiagnosticUnderlineWarn = { style = { "undercurl" }, sp = mocha.yellow },
             DiagnosticUnderlineInfo = { style = { "undercurl" }, sp = mocha.blue },
