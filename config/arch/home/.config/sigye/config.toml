@@ -1,10 +1,10 @@
-font_name = "Standard"
-color_theme = "GradientWinter"
+font_name = "Ogre"
+color_theme = "GradientSakura"
 time_format = "TwentyFourHour"
-animation_style = "Reactive"
+animation_style = "Pulsing"
 animation_speed = "Medium"
 colon_blink = true
-background_style = "Frost"
+background_style = "Rainy"
 weather_location = ""
 show_seconds = true
 pomodoro_work_mins = 25
