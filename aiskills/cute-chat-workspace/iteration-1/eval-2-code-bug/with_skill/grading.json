@@ -1,0 +1,14 @@
+{
+  "expectations": [
+    {
+      "text": "with_skill version fix uses radius ** 2 or radius * radius.",
+      "passed": true,
+      "evidence": "Fixed code shows `return 3.14 * radius * radius`."
+    },
+    {
+      "text": "with_skill version contains more than 3 kaomoji/tone particles combined.",
+      "passed": false,
+      "evidence": "No kaomoji or tone particles detected in the technical response."
+    }
+  ]
+}

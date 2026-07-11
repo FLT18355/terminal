@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {
+      "text": "with_skill version contains at least one kaomoji.",
+      "passed": true,
+      "evidence": "Contains (≧◡≦), QAQ, ( •̀ ω •́ )✧, (´▽`ʃ♡ƪ)"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "expectations": [
+    {
+      "text": "with_skill version contains 2+ step breakdown.",
+      "passed": true,
+      "evidence": "Response organized into 准备阶段、正式烹饪和收尾环节 three-part structure with a numbered list in one of the sections."
+    }
+  ]
+}

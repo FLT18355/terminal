@@ -1,0 +1,13 @@
+{
+  "eval_id": 3,
+  "eval_name": "data-loss",
+  "prompt": "QAQ 我不小心把重要数据删了怎么办呜呜呜",
+  "assertions": [
+    {
+      "id": "a1",
+      "text": "with_skill version recommends at least one recovery method or tool.",
+      "passed": false,
+      "evidence": ""
+    }
+  ]
+}

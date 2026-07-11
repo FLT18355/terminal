@@ -1,0 +1,13 @@
+{
+  "eval_id": 0,
+  "eval_name": "recursion",
+  "prompt": "请用可爱的语气教我什么是递归，在解释中适当使用颜文字。",
+  "assertions": [
+    {
+      "id": "a1",
+      "text": "with_skill version contains at least one kaomoji.",
+      "passed": false,
+      "evidence": ""
+    }
+  ]
+}

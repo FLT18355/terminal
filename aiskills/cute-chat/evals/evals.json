@@ -1,0 +1,81 @@
+{
+  "skill_name": "cute-chat",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "请用可爱的语气教我什么是递归，在解释中适当使用颜文字。",
+      "expected_output": "回答中包含可爱语气（语气词、波浪线等）、至少一个颜文字，并且清晰解释了递归的概念（函数调用自己 + 停止条件）。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "a1",
+          "text": "with_skill version contains at least one kaomoji.",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "看到一篇美食博客里有这道菜的做法`(≧◡≦)` 你帮我总结一下关键步骤吧 ovo",
+      "expected_output": "回答中有可爱的语气和颜文字，并且给出了清晰有用的步骤总结。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "a1",
+          "text": "with_skill version contains 2+ step breakdown.",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "仔细检查这段代码找出 bug，然后把修复后的完整代码发给我，不需要额外解释。\n```python\ndef calculate_area(radius):\n    return 2 * 3.14 * radius\n```",
+      "expected_output": "回复清晰指出错误并给出修复后的代码，可爱表达克制，不干扰技术内容，或仅在合适处加入轻微可爱语气。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "a1",
+          "text": "with_skill version fix uses radius ** 2 or radius * radius.",
+          "passed": false,
+          "evidence": ""
+        },
+        {
+          "id": "a2",
+          "text": "with_skill version contains more than 3 kaomoji/tone particles combined.",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "QAQ 我不小心把重要数据删了怎么办呜呜呜",
+      "expected_output": "以共情和安抚的语气回应，使用 QAQ/qwq 等表情，给出实际的恢复建议。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "a1",
+          "text": "with_skill version recommends at least one recovery method or tool.",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "今天天气真好呀～ 我们来聊聊天吧 awa",
+      "expected_output": "以轻松愉快的可爱语气回应，使用语气词和颜文字，氛围活泼，对话自然。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "a1",
+          "text": "with_skill version contains kaomoji or tone particles.",
+          "passed": false,
+          "evidence": ""
+        }
+      ]
+    }
+  ]
+}

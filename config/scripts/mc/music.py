@@ -7,32 +7,33 @@ import time
 import os
 import random
 
-#配置文件
-#音乐路径
+# 配置文件
+VERSION = "v1.0.0"
+# 音乐路径
 music_path = "/storage/emulated/0/系统文件勿删/data/python/音乐播放器整合一/"
-#权限
-music_op = [ "StarAwA10001", "FLT18355" ]
+# 权限
+music_op = ["StarAwA10001", "FLT18355"]
 
-#初始化
-#暗色
-R = "\033[31m" #红
-G = "\033[32m" #绿
-Y = "\033[33m" #黄
-B = "\033[34m" #蓝
-M = "\033[35m" #紫
-C = "\033[36m" #青
-W = "\033[37m" #灰
+# 初始化
+# 暗色
+R = "\033[31m"  # 红
+G = "\033[32m"  # 绿
+Y = "\033[33m"  # 黄
+B = "\033[34m"  # 蓝
+M = "\033[35m"  # 紫
+C = "\033[36m"  # 青
+W = "\033[37m"  # 灰
 
-#亮色
-BR = "\033[91m" #红
-BG = "\033[92m" #绿
-BY = "\033[93m" #黄
-BB = "\033[94m" #蓝
-BM = "\033[95m" #紫
-BC = "\033[96m" #青
-BW = "\033[97m" #白
+# 亮色
+BR = "\033[91m"  # 红
+BG = "\033[92m"  # 绿
+BY = "\033[93m"  # 黄
+BB = "\033[94m"  # 蓝
+BM = "\033[95m"  # 紫
+BC = "\033[96m"  # 青
+BW = "\033[97m"  # 白
 
-#重置
+# 重置
 X = "\033[0m"
 
 ws = None
@@ -40,43 +41,47 @@ test = False
 music_running = False
 music_preparename = None
 music_preparelist = None
+# 新增：循环随机播放控制
+random_loop = False
+random_loop_task = None
+
 
 def is_ws_open(connection):
     """检查 WebSocket 连接是否处于打开状态（兼容新版 websockets）"""
     if connection is None:
         return False
     # 新版 websockets 使用 state 属性
-    if hasattr(connection, 'state'):
+    if hasattr(connection, "state"):
         return connection.state == websockets.protocol.State.OPEN
     # 旧版兼容
-    if hasattr(connection, 'closed'):
+    if hasattr(connection, "closed"):
         return not connection.closed
     return False
+
 
 async def ainput():
     loop = asyncio.get_event_loop()
     return await loop.run_in_executor(None, sys.stdin.readline)
 
+
 async def runc(command):
     global ws
     global test
-    
+
     if not is_ws_open(ws):
         return
-    send_command={
+    send_command = {
         "body": {
-		    "origin": {
-			    "type": "player"
-		    },
-		    "commandLine": command,
-		    "version": 17039360
-	    },
-	    "header": {
-		    "requestId": str(uuid.uuid4()),
-		    "messagePurpose": "commandRequest",
-		    "version": 1,
-		    "messageType": "commandRequest"
-	    }
+            "origin": {"type": "player"},
+            "commandLine": command,
+            "version": 17039360,
+        },
+        "header": {
+            "requestId": str(uuid.uuid4()),
+            "messagePurpose": "commandRequest",
+            "version": 1,
+            "messageType": "commandRequest",
+        },
     }
     try:
         await ws.send(json.dumps(send_command))
@@ -84,22 +89,21 @@ async def runc(command):
         if test:
             print(f"{BR}Error {W}>> {BW}发包: {e}{X}")
 
+
 async def sub(event):
     global ws
     global test
-    
+
     if not is_ws_open(ws):
         return
-    send_subscribe={
-	    "body": {
-		    "eventName": event
-	    },
-	    "header": {
-	    	"requestId": str(uuid.uuid4()),
-	    	"messagePurpose": "subscribe",
-		    "version": 1,
-		    "messageType": "commandRequest"
-	    }
+    send_subscribe = {
+        "body": {"eventName": event},
+        "header": {
+            "requestId": str(uuid.uuid4()),
+            "messagePurpose": "subscribe",
+            "version": 1,
+            "messageType": "commandRequest",
+        },
     }
     try:
         await ws.send(json.dumps(send_subscribe))
@@ -107,33 +111,34 @@ async def sub(event):
         if test:
             print(f"{BR}Error {W}>> {BW}发包: {e}{X}")
 
+
 async def music_run(music_name, music_list):
     if not music_name or not music_list:
         print(f"{BR}System {W}>> {BW}音乐列表为空 {X}")
         return
-    
+
     global music_running
     if music_running:
         print(f"{BR}System {W}>> {BW}已有音乐播放 {X}")
         return
-    
+
     print(f"{BB}System {W}>> {BW}正在播放 {BY}{music_name} {X}")
     await runc(f"/me §f正在播放 §e{music_name}")
     music_running = True
-    
+
     start_time = asyncio.get_event_loop().time()
-    
+
     for music_time, music_timbre, music_pitch, music_volume in music_list:
         if not music_running:
             print(f"{BB}System {W}>> {BW}音乐进程已关闭 {X}")
             await runc("/me §f音乐进程已关闭")
             return
-        
+
         wait_time = music_time - asyncio.get_event_loop().time() + start_time
-        
+
         if wait_time > 0:
             await asyncio.sleep(wait_time)
-            
+
         command = f"/execute as @a at @s run playsound {music_timbre} @s ~ ~ ~ {music_pitch} {music_volume}"
         try:
             asyncio.create_task(runc(command))
@@ -144,49 +149,103 @@ async def music_run(music_name, music_list):
             await runc("未知错误 音乐进程关闭")
             music_running = False
             return
-        
+
     print(f"{BB}System {W}>> {BY}{music_name} {BW}已播放完毕{X}")
     await runc(f"/me §e{music_name} §f已播放完毕")
     music_running = False
 
+
 async def music_load(music_file):
     global music_preparelist
     global music_preparename
-    
+
     try:
         with open(music_file, "r", encoding="utf-8") as f:
             music_config = json.load(f)
-        
+
         music_preparename = music_config["title"]
         music_preparelist = music_config["tracks"]
-        
+
         return True
     except Exception as e:
         if test:
             print(f"{BR} {W}>> {BW}文件: {e}{X}")
         return False
 
+
 async def music_fastrun(text):
     global music_running
     global music_preparelist
     global music_preparename
     global music_path
-    
+
     if await music_load(music_path + text[11:].strip() + ".json"):
         print(f"{BB}System {W}>> {BW}音乐文件配置成功{X}")
     else:
         print(f"{BR}Error {W}>> {BW}音乐文件配置失败{X}")
         return
-    
+
     if not is_ws_open(ws):
         print(f"{BB}System {W}>> {BW}服务器未连接{X}")
         return
-        
+
     if music_running:
         print(f"{BB}System {W}>> {BW}已有音乐进程播放{X}")
         return
     else:
         await music_run(music_preparename, music_preparelist)
+
+
+async def random_loop_play():
+    """循环随机播放音乐"""
+    global music_running
+    global random_loop
+    global music_path
+
+    print(f"{BB}System {W}>> {BW}开始循环随机播放模式{X}")
+    await runc("/me §f已开启 §e循环随机播放 §f模式")
+
+    while random_loop:
+        # 获取所有json文件
+        json_files = [f for f in os.listdir(music_path) if f.endswith(".json")]
+        if not json_files:
+            print(f"{BR}System {W}>> {BW}没有找到任何音乐文件{X}")
+            await runc("/me §c没有找到任何音乐文件")
+            break
+
+        # 随机选择一个文件
+        random_file = random.choice(json_files)
+        music_name = random_file[:-5]  # 去掉.json后缀
+
+        print(f"{BB}System {W}>> {BW}随机选择: {random_file}{X}")
+
+        # 加载并播放音乐
+        if await music_load(music_path + random_file):
+            if music_running:
+                # 等待当前音乐播放完毕
+                while music_running and random_loop:
+                    await asyncio.sleep(1)
+
+            if not random_loop:
+                break
+
+            if not music_running:
+                await music_run(music_preparename, music_preparelist)
+
+                # 等待音乐播放完毕
+                while music_running and random_loop:
+                    await asyncio.sleep(1)
+            else:
+                # 如果循环标志被关闭，退出
+                if not random_loop:
+                    break
+        else:
+            print(f"{BR}System {W}>> {BW}加载音乐文件失败: {random_file}{X}")
+            await asyncio.sleep(2)
+
+    print(f"{BB}System {W}>> {BW}循环随机播放已停止{X}")
+    await runc("/me §f已关闭 §e循环随机播放 §f模式")
+
 
 async def loop():
     while True:
@@ -198,6 +257,7 @@ async def loop():
                 if test:
                     print(f"{BR}Error {W}>> {BW}保活: {e}{X}")
 
+
 async def connect(websocket, path=None):
     global ws
     global test
@@ -205,7 +265,9 @@ async def connect(websocket, path=None):
     global music_preparelist
     global music_preparename
     global music_path
-    
+    global random_loop
+    global random_loop_task
+
     if is_ws_open(ws):
         print(f"{BB}System {W}>> {BW}已有连接，拒绝新连接{X}")
         await websocket.close(1000, "已有连接存在")
@@ -213,13 +275,13 @@ async def connect(websocket, path=None):
 
     ws = websocket
     print(f"{BB}System {W}>> {BW}服务器已连接{X}")
-    
+
     asyncio.create_task(loop())
-    
-    await runc("/me §bStar §fMusic 已启动")
-    
+
+    await runc("/me §l§dF§aL§sT§c18355 §fMusic 已启动")
+
     await sub("PlayerMessage")
-    
+
     try:
         async for message in ws:
             data = json.loads(message)
@@ -227,44 +289,118 @@ async def connect(websocket, path=None):
             if purpose == "event":
                 if test:
                     print(f"{BY}Test {W}>> {BW}检测到服务包\n{W}{data}\n\n{X}")
-                    
+
                 event_name = data.get("header", {}).get("eventName")
-                
+
                 if event_name == "PlayerMessage":
-                    message_type=data.get("body", {}).get("type")
-                    message_text=data.get("body", {}).get("message")
-                    message_sender=data.get("body", {}).get("sender")
-                    
+                    message_type = data.get("body", {}).get("type")
+                    message_text = data.get("body", {}).get("message")
+                    message_sender = data.get("body", {}).get("sender")
+
                     if message_type == "chat":
                         print(f"{W}<{BW}{message_sender}{W}> {BW}{message_text}{X}")
-                        
+
                         if not message_text.startswith("!"):
                             continue
-                            
-                        if message_sender != "StarAwA10001" and message_sender not in music_op:
-                            await runc(f'/tellraw {message_sender} {{"rawtext":[{{"text":"§cError §7>> §f您没有使用命令的权限！§r"}}]}}')
+
+                        if (
+                            message_sender != "StarAwA10001"
+                            and message_sender not in music_op
+                        ):
+                            await runc(
+                                f'/tellraw {message_sender} {{"rawtext":[{{"text":"§cError §7>> §f您没有使用命令的权限！§r"}}]}}'
+                            )
                             continue
-                            
+
                         if message_text == "!music run":
                             if not is_ws_open(ws):
                                 print(f"{BB}System {W}>> {BW}服务器未连接{X}")
                             elif music_running:
                                 print(f"{BB}System {W}>> {BW}已有音乐进程播放{X}")
                             else:
-                                asyncio.create_task(music_run(music_preparename, music_preparelist))
-                            
+                                # 如果循环随机播放模式开启，先关闭
+                                if random_loop:
+                                    random_loop = False
+                                    if random_loop_task:
+                                        try:
+                                            random_loop_task.cancel()
+                                        except:
+                                            pass
+                                asyncio.create_task(
+                                    music_run(music_preparename, music_preparelist)
+                                )
+
                         elif message_text.startswith("!music run "):
+                            # 如果循环随机播放模式开启，先关闭
+                            if random_loop:
+                                random_loop = False
+                                if random_loop_task:
+                                    try:
+                                        random_loop_task.cancel()
+                                    except:
+                                        pass
                             asyncio.create_task(music_fastrun(message_text))
-                            
+
                         elif message_text == "!music random":
-                            json_files = [f for f in os.listdir(music_path) if f.endswith(".json")]
+                            json_files = [
+                                f for f in os.listdir(music_path) if f.endswith(".json")
+                            ]
                             if json_files:
                                 random_file = random.choice(json_files)
-                                asyncio.create_task(music_fastrun(f"!music run {random_file[:-5]}"))
-                                print(f"{BB}System {W}>> {BW}随机选取文件 {random_file}{X}")
+                                asyncio.create_task(
+                                    music_fastrun(f"!music run {random_file[:-5]}")
+                                )
+                                print(
+                                    f"{BB}System {W}>> {BW}随机选取文件 {random_file}{X}"
+                                )
                             else:
                                 print(f"{BB}System {W}>> {BW}文件获取失败{X}")
-                            
+
+                        elif message_text == "!music loop random":
+                            """开启循环随机播放"""
+                            if random_loop:
+                                await runc(
+                                    f'/tellraw {message_sender} {{"rawtext":[{{"text":"§eSystem §7>> §f循环随机播放已在运行中§r"}}]}}'
+                                )
+                                continue
+
+                            # 检查是否有音乐文件
+                            json_files = [
+                                f for f in os.listdir(music_path) if f.endswith(".json")
+                            ]
+                            if not json_files:
+                                await runc(
+                                    f'/tellraw {message_sender} {{"rawtext":[{{"text":"§cError §7>> §f没有找到任何音乐文件§r"}}]}}'
+                                )
+                                continue
+
+                            random_loop = True
+                            random_loop_task = asyncio.create_task(random_loop_play())
+                            await runc(
+                                f'/tellraw {message_sender} {{"rawtext":[{{"text":"§aSystem §7>> §f已开启循环随机播放§r"}}]}}'
+                            )
+
+                        elif message_text == "!music loop stop":
+                            """停止循环随机播放"""
+                            if not random_loop:
+                                await runc(
+                                    f'/tellraw {message_sender} {{"rawtext":[{{"text":"§eSystem §7>> §f循环随机播放未在运行§r"}}]}}'
+                                )
+                                continue
+
+                            random_loop = False
+                            if random_loop_task:
+                                try:
+                                    random_loop_task.cancel()
+                                except:
+                                    pass
+                            # 停止当前正在播放的音乐
+                            if music_running:
+                                music_running = False
+                            await runc(
+                                f'/tellraw {message_sender} {{"rawtext":[{{"text":"§aSystem §7>> §f已停止循环随机播放§r"}}]}}'
+                            )
+
                         elif message_text == "!music stop":
                             if music_running:
                                 print(f"{BB}System {W}>> {BW}等待音乐进程取消…{X}")
@@ -273,26 +409,43 @@ async def connect(websocket, path=None):
                             else:
                                 print(f"{BB}System {W}>> {BW}当前不存在任何音乐进程{X}")
                                 await runc("/me §f当前没有§e正在播放的音乐")
-                            
+
+                            # 如果循环随机播放模式开启，也停止
+                            if random_loop:
+                                random_loop = False
+                                if random_loop_task:
+                                    try:
+                                        random_loop_task.cancel()
+                                    except:
+                                        pass
+
+                        elif message_text == "!music help" or message_text == "!help":
+                            await runc(
+                                f'/tellraw {message_sender} {{"rawtext":[{{"text":"§b===== §fMusic {VERSION} §b=====\\n§7权限: §f{", ".join(music_op)}\\n§b--- §f命令列表 §b---\\n§e!help §7- 显示帮助\\n§e!music run §7- 播放已加载的音乐\\n§e!music run <name> §7- 播放指定音乐\\n§e!music stop §7- 停止播放\\n§e!music random §7- 随机播放一首\\n§e!music loop random §7- 循环随机播放\\n§e!music loop stop §7- 停止循环随机"}}]}}'
+                            )
+
                         else:
-                            await runc(f'/tellraw {message_sender} {{"rawtext":[{{"text":"§cError §7>> §f命令库中没有该命令§r"}}]}}')
-                            
+                            await runc(
+                                f'/tellraw {message_sender} {{"rawtext":[{{"text":"§cError §7>> §f命令库中没有该命令§r"}}]}}'
+                            )
+
                     elif message_type == "me":
                         print(f"{W}* {BW}{message_sender} {BW}{message_text}{X}")
-                    
+
                     elif message_type == "say":
                         print(f"{BW}{message_text}{X}")
-                    
+
             elif purpose == "commandResponse":
                 status_message = data.get("body", {}).get("statusMessage")
                 if status_message:
                     pass
-                    #print(f"{BM}CR {W}>> {BW}{status_message}{X}")
+                    # print(f"{BM}CR {W}>> {BW}{status_message}{X}")
     except Exception as e:
         if test:
             print(f"{BR}music_path {W}>> {BW}服务: {e}{X}")
     finally:
         ws = None
+
 
 async def main():
     server = await websockets.serve(connect, "0.0.0.0", 8887)
@@ -303,18 +456,28 @@ async def main():
     global music_preparelist
     global music_preparename
     global music_path
-    
+    global random_loop
+    global random_loop_task
+
     try:
         while True:
             cmd = await ainput()
             cmd = cmd.strip()
-            
+
             if not cmd:
                 continue
-            
+
             if cmd == "/stop":
                 print(f"{BB}System {W}>> {BW}正在停止服务器...{X}")
-                
+
+                # 停止循环随机播放
+                random_loop = False
+                if random_loop_task:
+                    try:
+                        random_loop_task.cancel()
+                    except:
+                        pass
+
                 if is_ws_open(ws):
                     await runc("/me §bStar §fMusic 正断开连接")
                     try:
@@ -323,7 +486,7 @@ async def main():
                         pass
                     ws = None
                     await asyncio.sleep(0.1)
-                
+
                 server.close()
                 try:
                     await asyncio.wait_for(server.wait_closed(), timeout=5)
@@ -332,12 +495,30 @@ async def main():
                 except asyncio.TimeoutError:
                     print(f"{BB}System {W}>> {BW}关闭超时，强制终止程序{X}")
                     break
+            elif cmd == "/help":
+                print(f"{BB}===== Music {VERSION} ====={X}")
+                print(f"{W}权限: {BW}{', '.join(music_op)}{X}")
+                print(f"{BB}--- 命令列表 ---{X}")
+                print(f"{BY}/help        {BW}- 显示帮助{X}")
+                print(f"{BY}/status      {BW}- 显示状态{X}")
+                print(f"{BY}/test T/F    {BW}- 开启/关闭调试模式{X}")
+                print(f"{BY}/music load <name>  {BW}- 加载音乐文件{X}")
+                print(f"{BY}/music run   {BW}- 播放已加载的音乐{X}")
+                print(f"{BY}/music run <name>   {BW}- 播放指定音乐{X}")
+                print(f"{BY}/music stop  {BW}- 停止播放{X}")
+                print(f"{BY}/music random      {BW}- 随机播放一首{X}")
+                print(f"{BY}/music loop random  {BW}- 循环随机播放{X}")
+                print(f"{BY}/music loop stop    {BW}- 停止循环随机{X}")
+                print(f"{BY}/stop        {BW}- 停止服务器{X}")
             elif cmd == "/status":
                 if is_ws_open(ws):
                     print(f"{BB}System {W}>> {BW}状态: 已连接{X}")
                 else:
                     print(f"{BB}System {W}>> {BW}状态: 未连接{X}")
                 print(f"{BB}System {W}>> {BW}调试模式: {test}{X}")
+                print(
+                    f"{BB}System {W}>> {BW}循环随机播放: {'开启' if random_loop else '关闭'}{X}"
+                )
             elif cmd == "/test True":
                 test = True
                 print(f"{BB}System {W}>> {BW}调试模式已启用{X}")
@@ -350,16 +531,65 @@ async def main():
                 else:
                     print(f"{BR}System {W}>> {BW}音乐文件配置失败{X}")
             elif cmd == "/music run":
+                # 如果循环随机播放模式开启，先关闭
+                if random_loop:
+                    random_loop = False
+                    if random_loop_task:
+                        try:
+                            random_loop_task.cancel()
+                        except:
+                            pass
                 if not is_ws_open(ws):
                     print(f"{BB}System {W}>> {BW}服务器未连接{X}")
                 elif music_running:
                     print(f"{BB}System {W}>> {BW}已有音乐进程播放{X}")
                 else:
                     asyncio.create_task(music_run(music_preparename, music_preparelist))
-            
+
             elif cmd.startswith("/music run "):
+                # 如果循环随机播放模式开启，先关闭
+                if random_loop:
+                    random_loop = False
+                    if random_loop_task:
+                        try:
+                            random_loop_task.cancel()
+                        except:
+                            pass
                 asyncio.create_task(music_fastrun(cmd))
-                
+
+            elif cmd == "/music loop random":
+                """开启循环随机播放"""
+                if random_loop:
+                    print(f"{BB}System {W}>> {BW}循环随机播放已在运行中{X}")
+                    continue
+
+                # 检查是否有音乐文件
+                json_files = [f for f in os.listdir(music_path) if f.endswith(".json")]
+                if not json_files:
+                    print(f"{BR}System {W}>> {BW}没有找到任何音乐文件{X}")
+                    continue
+
+                random_loop = True
+                random_loop_task = asyncio.create_task(random_loop_play())
+                print(f"{BB}System {W}>> {BW}已开启循环随机播放{X}")
+
+            elif cmd == "/music loop stop":
+                """停止循环随机播放"""
+                if not random_loop:
+                    print(f"{BB}System {W}>> {BW}循环随机播放未在运行{X}")
+                    continue
+
+                random_loop = False
+                if random_loop_task:
+                    try:
+                        random_loop_task.cancel()
+                    except:
+                        pass
+                # 停止当前正在播放的音乐
+                if music_running:
+                    music_running = False
+                print(f"{BB}System {W}>> {BW}已停止循环随机播放{X}")
+
             elif cmd == "/music stop":
                 print(f"{BB}System {W}>> {BW}音乐命令判断中…{X}")
                 if music_running:
@@ -367,13 +597,30 @@ async def main():
                     music_running = False
                 else:
                     print(f"{BB}System {W}>> {BW}当前不存在任何音乐进程{X}")
-            
+
+                # 如果循环随机播放模式开启，也停止
+                if random_loop:
+                    random_loop = False
+                    if random_loop_task:
+                        try:
+                            random_loop_task.cancel()
+                        except:
+                            pass
+
             elif cmd[0] == "/":
                 await runc(cmd)
             else:
                 await runc(f"/me {cmd}")
-        
+
     except KeyboardInterrupt:
+        # 停止循环随机播放
+        random_loop = False
+        if random_loop_task:
+            try:
+                random_loop_task.cancel()
+            except:
+                pass
+
         if is_ws_open(ws):
             await runc("/me §bStar §fMusic 正在断开连接")
             try:
@@ -382,15 +629,17 @@ async def main():
                 pass
             ws = None
             await asyncio.sleep(0.1)
-        
+
         server.close()
         try:
             await asyncio.wait_for(server.wait_closed(), timeout=5)
         except asyncio.TimeoutError:
             pass
-    
+
     finally:
         ws = None
         sys.exit(0)
 
+
 asyncio.run(main())
+
