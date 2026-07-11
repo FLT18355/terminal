@@ -1,6 +1,6 @@
 # FLT18355 - Terminal Config
 
-**仓库版本 / Repo Version:** `1.3.0`
+**仓库版本 / Repo Version:** `1.3.2`
 
 ### 我的终端配置 + AI Skills
 

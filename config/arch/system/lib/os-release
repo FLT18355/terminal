@@ -1,5 +1,5 @@
 NAME="FLTOS"
-PRETTY_NAME="FLTOS World 1.3.0"
+PRETTY_NAME="FLTOS World 1.3.2"
 ID=archarm
 ID_LIKE=arch
 BUILD_ID=rolling
