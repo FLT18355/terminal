@@ -10,7 +10,6 @@ set -gx VISUAL nvim
 set -gx PATH $PATH $HOME/go/bin
 set -gx PATH $PATH $HOME/.cargo/bin
 set -gx PATH $PATH $HOME/.local/bin
-set -gx PATH $PREFIX/bin $PATH
 fish_add_path ~/bin
 fish_add_path /home/flt18355/.opencode/bin
 
@@ -43,12 +42,7 @@ set -gx HISTFILE ~/.local/share/fish/fish_history
 # 光标
 set -gx KEYTIMEOUT 10
 
-# Homebrew (Tsinghua 镜像)
-set -gx HOMEBREW_BOTTLE_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles"
-set -gx HOMEBREW_API_DOMAIN "https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles/api"
-set -gx HOMEBREW_BREW_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git"
-set -gx HOMEBREW_CORE_GIT_REMOTE "https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git"
-set -gx HOMEBREW_INSTALL_FROM_API 1
+
 
 # 其他
 set -gx GLYCIN_DISABLE_SANDBOX 1

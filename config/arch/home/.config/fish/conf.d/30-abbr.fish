@@ -11,4 +11,3 @@ abbr --add gd "git diff"
 abbr --add g git
 abbr --add gga "git gc --aggressive"
 abbr --add gpa "git push && git gc --aggressive"
-abbr --add tma "am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity"

@@ -15,8 +15,5 @@ fish_config theme choose catppuccin-mocha
 # Vi 模式 (默认禁用)
 # set -g fish_key_bindings fish_vi_key_bindings
 
-# Termux API (默认禁用)
-# am start com.termux.api/com.termux.api.activities.TermuxAPIMainActivity
-
 set fish_greeting
 ffc

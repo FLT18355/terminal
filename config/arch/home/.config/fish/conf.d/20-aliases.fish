@@ -2,19 +2,9 @@
 # 别名 (与 abbreviations 不重复)
 # ============================================
 
-# ---- Termux 专属 ----
-alias chcolor='/data/data/com.termux/files/home/.termux/colors.sh'
-alias chfont='/data/data/com.termux/files/home/.termux/fonts.sh'
-alias 清理='bash ~/.termux/boot/01-clean-termux'
-
 # ---- 目录导航 ----
-alias tp="cd ~/终端专用文件夹"
-alias td="cd /storage/emulated/0/Download/"
 alias th='cd ~'
 alias troot="cd /"
-alias tsd="cd /storage/emulated/0/"
-alias tdc="cd /storage/emulated/0/DCIM/"
-alias tpic="cd /storage/emulated/0/Pictures/"
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
@@ -106,3 +96,4 @@ alias e='exit'
 alias ST='py ~/终端专用文件夹/f-tools/ST.py'
 alias 中国日历='py ~/终端专用文件夹/f-tools/中国日历.py'
 alias ydd='py ~/终端专用文件夹/f-tools/yd下载器.py'
+alias her='herdr'
