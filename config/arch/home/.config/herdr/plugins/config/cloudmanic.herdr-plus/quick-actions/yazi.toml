@@ -1,0 +1,3 @@
+name = "打开鸭子"
+description = "打开鸭子(一个文件管理器)"
+command = "yazi"

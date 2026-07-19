@@ -1,0 +1,3 @@
+name = "听音乐"
+description = "使用go-musicfox播放音乐awa"
+command = "musicfox"
