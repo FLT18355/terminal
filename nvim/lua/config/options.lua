@@ -15,19 +15,22 @@ vim.opt.breakindent = true
 vim.opt.showbreak = "↪ "
 
 -- 让 y 复制到系统剪贴板 + 寄存器
-vim.keymap.set({'n', 'v'}, 'y', '"+y')   -- 普通模式和可视模式下 y 映射到 +y
+vim.keymap.set({ "n", "v" }, "y", '"+y') -- 普通模式和可视模式下 y 映射到 +y
 
 -- 为 Termux 配置系统剪贴板支持
-if vim.fn.executable('termux-clipboard-set') == 1 then
-    vim.g.clipboard = {
-        name = 'termux-clipboard',
-        copy = {
-            ['+'] = { 'termux-clipboard-set' },
-            ['*'] = { 'termux-clipboard-set' },
-        },
-        paste = {
-            ['+'] = { 'termux-clipboard-get' },
-            ['*'] = { 'termux-clipboard-get' },
-        },
-    }
+if vim.fn.executable("termux-clipboard-set") == 1 then
+  vim.g.clipboard = {
+    name = "termux-clipboard",
+    copy = {
+      ["+"] = { "termux-clipboard-set" },
+      ["*"] = { "termux-clipboard-set" },
+    },
+    paste = {
+      ["+"] = { "termux-clipboard-get" },
+      ["*"] = { "termux-clipboard-get" },
+    },
+  }
 end
+
+-- 强制使用basedpyright(在启用lazyvim python扩展的情况下)
+vim.g.lazyvim_python_lsp = "basedpyright"

@@ -29,7 +29,9 @@ vim.api.nvim_create_autocmd("FileType", {
       local filename = vim.fn.expand("%:p")
       vim.cmd(string.format('!ruff format "%s"', filename))
       vim.notify("已使用 ruff 格式化", vim.log.levels.INFO)
-
     end, { buffer = true, desc = "Format Python with ruff" })
   end,
 })
+
+-- 指定python目录
+vim.g.python3_host_prog = "/usr/bin/python3"
