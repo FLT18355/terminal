@@ -1,0 +1,176 @@
+# Catppuccin Mocha - Go-Musicfox Theme
+name = "Catppuccin Mocha"
+description = "Catppuccin Mocha theme for go-musicfox"
+
+# ── Dark Variant ───────────────────────────────────────────
+[dark]
+primary = "#cba6f7"       # 主色: 淡紫
+secondary = "#bac2de"     # 次级文字: 灰蓝
+accent = "#89b4fa"        # 强调色: 蓝
+success = "#a6e3a1"       # 成功: 绿
+warning = "#f9e2af"       # 警告: 黄
+error = "#f38ba8"         # 错误: 红
+info = "#89dceb"          # 信息: 天蓝
+muted = "#6c7086"         # 静音: 深灰紫
+hintKey = "#585b70"       # 提示键: 暗灰
+background = "#1e1e2e"    # 背景: 深蓝黑
+foreground = "#cdd6f4"    # 前景: 白
+border = "#313244"        # 边框: 灰
+surface = "#2e2e3e"       # 表面: 略亮
+
+[dark.highlights]
+menuTitle = "#a6e3a1"
+menuItem = "#cdd6f4"
+selectedItem = "#cba6f7"
+selectedItemBg = "#313244"
+menuItemHover = "#94e2d5"
+selectedItemHover = "#f5c2e7"
+title = "#f5e0dc"
+prompt = "#89b4fa"
+backButton = "#f38ba8"
+backButtonHover = "#f9e2af"
+subtitle = "#bac2de"
+progressEmpty = "#313244"
+scrollTrack = "#313244"
+scrollThumb = "#585b70"
+button = "#89b4fa"
+buttonBlurred = "#6c7086"
+
+[dark.popup]
+surface = "#313244"
+border = "#45475a"
+
+[dark.notification]
+surface = "#313244"
+infoBorder = "#89b4fa"
+successBorder = "#a6e3a1"
+warningBorder = "#f9e2af"
+errorBorder = "#f38ba8"
+
+[dark.statusBar]
+bar = "#1e1e2e"
+text = "#cdd6f4"
+breadcrumb = "#89b4fa"
+breadcrumbSep = "#6c7086"
+breadcrumbHover = "#cba6f7"
+breadcrumbClick = "#f5e0dc"
+time = "#bac2de"
+nugget = "#cdd6f4"
+nuggetLabel = "#45475a"
+
+[dark.markdown]
+dark = "dark"
+light = "light"
+
+[dark.app]
+lyricActive = "#89dceb"
+lyricTransition = "#cba6f7"
+lyricInactive = "#6c7086"
+lyricHighlight = "#f5e0dc"
+playbarMode = "#cba6f7"
+playbarVolume = "#89b4fa"
+playbarPlaying = "#a6e3a1"
+playbarPaused = "#f9e2af"
+playbarHeartLiked = "#f38ba8"
+playbarHeartUnliked = "#6c7086"
+playbarArtist = "#9399b2"
+visualizerColorStart = "random"
+visualizerColorEnd = "random"
+background = "#1e1e2e"
+contextMenuBg = "#313244"
+contextMenuBorder = "#45475a"
+spectrumVerticalBg = "#1e1e2e"
+desktopLyricsBg = "#1e1e2e"
+loginError = "#f38ba8"
+loginSuccess = "#a6e3a1"
+authStatus = "#89b4fa"
+configTableBorder = "#45475a"
+configTableSelectedFg = "#cba6f7"
+configTableSelectedBg = "#313244"
+
+# ── Light Variant ──────────────────────────────────────────
+# 如需亮色版可另行配置，这里保留基础结构
+[light]
+primary = "#8839ef"
+secondary = "#6c6c6c"
+accent = "#1e66f5"
+success = "#40a02b"
+warning = "#df8e1d"
+error = "#d20f39"
+info = "#209fb5"
+muted = "#9ca0b0"
+hintKey = "#acb0be"
+background = "#eff1f5"
+foreground = "#4c4f69"
+border = "#ccd0da"
+surface = "#e6e9ef"
+
+[light.highlights]
+menuTitle = "#40a02b"
+menuItem = "#4c4f69"
+selectedItem = "#8839ef"
+selectedItemBg = "#ccd0da"
+menuItemHover = "#04a5e5"
+selectedItemHover = "#ea76cb"
+title = "#dc8a78"
+prompt = "#1e66f5"
+backButton = "#d20f39"
+backButtonHover = "#df8e1d"
+subtitle = "#6c6c6c"
+progressEmpty = "#ccd0da"
+scrollTrack = "#ccd0da"
+scrollThumb = "#acb0be"
+button = "#1e66f5"
+buttonBlurred = "#9ca0b0"
+
+[light.popup]
+surface = "#e6e9ef"
+border = "#bcc0cc"
+
+[light.notification]
+surface = "#e6e9ef"
+infoBorder = "#1e66f5"
+successBorder = "#40a02b"
+warningBorder = "#df8e1d"
+errorBorder = "#d20f39"
+
+[light.statusBar]
+bar = "#eff1f5"
+text = "#4c4f69"
+breadcrumb = "#1e66f5"
+breadcrumbSep = "#9ca0b0"
+breadcrumbHover = "#8839ef"
+breadcrumbClick = "#dc8a78"
+time = "#6c6c6c"
+nugget = "#4c4f69"
+nuggetLabel = "#bcc0cc"
+
+[light.markdown]
+dark = "dark"
+light = "light"
+
+[light.app]
+lyricActive = "#209fb5"
+lyricTransition = "#8839ef"
+lyricInactive = "#9ca0b0"
+lyricHighlight = "#dc8a78"
+playbarMode = "#8839ef"
+playbarVolume = "#1e66f5"
+playbarPlaying = "#40a02b"
+playbarPaused = "#df8e1d"
+playbarHeartLiked = "#d20f39"
+playbarHeartUnliked = "#9ca0b0"
+playbarArtist = "#7c7f93"
+visualizerColorStart = "random"
+visualizerColorEnd = "random"
+background = "#eff1f5"
+contextMenuBg = "#e6e9ef"
+contextMenuBorder = "#bcc0cc"
+spectrumVerticalBg = "#eff1f5"
+desktopLyricsBg = "#eff1f5"
+loginError = "#d20f39"
+loginSuccess = "#40a02b"
+authStatus = "#1e66f5"
+configTableBorder = "#bcc0cc"
+configTableSelectedFg = "#8839ef"
+configTableSelectedBg = "#e6e9ef"
