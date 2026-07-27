@@ -10,4 +10,4 @@
 git clone https://github/FLT18355/terminal.git
 ```
 
-欢迎使用这个非常低级的仓库awa, 很高兴你的使用. 
+配置在**config**目录里面, 里面分为archlinux配置, termux配置, debian配置(即将移除)
