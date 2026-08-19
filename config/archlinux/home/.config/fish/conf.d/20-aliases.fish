@@ -74,6 +74,7 @@ alias du="du -h"
 alias du-max="du -sh * | sort -hr"
 alias clear='/usr/bin/clear'
 alias cl='clear && echo "󰄛 打扫干净啦！" && ci'
+alias maint='python3 ~/Daily/tools/sysmaint.py'
 
 # ---- 搜索 ----
 alias ftext="grep -r --include='*.txt'"
@@ -97,3 +98,7 @@ alias ST='py ~/终端专用文件夹/f-tools/ST.py'
 alias 中国日历='py ~/终端专用文件夹/f-tools/中国日历.py'
 alias ydd='py ~/终端专用文件夹/f-tools/yd下载器.py'
 alias her='herdr'
+alias unm="npx -p @unblockneteasemusic/server"
+alias dsh="node --expose-internals /usr/lib/node_modules/@deepseek-ai/dsh/lib/bin.js"
+alias xiamenw="curl wttr.in/厦门?lang=zh-cn"
+alias gits="/home/flt18355/Daily/tools/gits.py"

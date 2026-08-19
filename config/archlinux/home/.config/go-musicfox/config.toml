@@ -13,9 +13,9 @@ progressOutBounce = true
 # 启动页的持续时长（秒）
 loadingSeconds = 2
 # 启动页欢迎语
-welcome = "musicfox-flt"
+welcome = "musicfox"
 # 启动页动画：sequence、fade-in、rainbow-wave、typewriter、spinner、slide-in、glitch、matrix-rain、particle-burst
-animation = "rainbow-wave"
+animation = "sequence"
 # 是否停用启动页动画以减少动态效果
 reducedMotion = false
 # 启动时是否自动签到 (网易云有风控，建议关闭)
@@ -142,7 +142,7 @@ offset = 0
 skipParseErr = false
 # YRC 歌词渲染模式（仅对逐字歌词有效）
 # 可选: "simple"(简单，默认), "smooth"(平滑), "wave"(波浪), "glow"(发光)
-renderMode = "wave"
+renderMode = "smooth"
 
 # 封面图显示设置（需要支持Kitty图形协议的终端，如Kitty、WezTerm、Ghostty等）
 [main.lyric.cover]
@@ -174,13 +174,13 @@ fontSize = 24
 # 字体名称（留空使用系统默认字体）
 fontName = ""
 # 文字颜色（十六进制）
-textColor = "#cdd6f4"
+textColor = "#FFFFFF"
 # 文字阴影颜色（十六进制）
-shadowColor = "#f38ba8"
+shadowColor = "#EA403F"
 # 阴影模糊半径（像素）
 shadowRadius = 1.0
 # 背景颜色（十六进制）
-backgroundColor = "#1e1e2e"
+backgroundColor = "#000000"
 # 背景透明度（0.0-1.0，默认 0.60）
 backgroundAlpha = 0.60
 # 背景圆角半径（像素，0 使用默认胶囊形状 fontSize/2）
@@ -211,11 +211,11 @@ spectrumStyle = "line"
 # 频谱整体透明度（0.0-1.0，默认 0.8）
 spectrumOpacity = 0.8
 # 低频颜色（十六进制）
-spectrumColorLow = "#a6e3a1"
+spectrumColorLow = "#00FF00"
 # 中频颜色（十六进制）
-spectrumColorMid = "#f9e2af"
+spectrumColorMid = "#FFCC00"
 # 高频颜色（十六进制）
-spectrumColorHigh = "#f38ba8"
+spectrumColorHigh = "#FF0000"
 
 # Go性能分析工具pprof的相关设置
 [main.pprof]
@@ -230,9 +230,9 @@ neteaseCookie = ""
 
 # 主题设置
 [theme]
-# 活跃主题名称（对应主题文件中的 name 字段，默认 "NetEase Red"）
+# 活跃主题名称（对应主题文件中的 name 字段，默认 "Default"）
 # 主题文件存放于 embed/themes/（内置）和 ~/.config/go-musicfox/themes/（用户自定义）
-activeTheme = "Catppuccin Mocha"
+activeTheme = "Default"
 # 是否在界面顶部显示标题
 showTitle = true
 # 菜单加载时显示的提示文字
@@ -248,7 +248,8 @@ centerEverything = false
 # 主题颜色
 # 随机
 # primaryColor = "random"
-primaryColor = "#cba6f7"
+# 经典网易云音乐红
+primaryColor = "#CBA6F7"
 # 是否显示底部状态栏（面包屑导航路径 + 时间）
 statusBar = true
 # 无障碍模式：高对比度主题 + 强调样式
@@ -259,7 +260,7 @@ accessibleMode = false
 [theme.progress]
 # 进度条渲染模式
 # 可选: "smooth"(平滑，默认), "wave"(波浪), "glow"(发光)
-renderMode = "wave"
+renderMode = "smooth"
 # 进度条已加载字符
 fullChar = "#"
 fullCharWhenFirst = "#"
@@ -311,7 +312,7 @@ maxPlayErrCount = 3
 # 期望的歌曲音质
 # 可选: "standard", "exhigh", "higher", "lossless", "hires",
 #       "jyeffect"(高清环绕声), "sky"(沉浸环绕声), "jymaster"(超清母带)
-songLevel = "higher"
+songLevel = "standard"
 # 是否获取并显示歌单下的所有歌曲，默认前 1000 首
 # 开启后可能会占用更多内存（大量歌曲数据）和带宽（会同时发送多个请求获取歌单下歌曲数据）
 showAllSongsOfPlaylist = false

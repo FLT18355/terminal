@@ -1,9 +1,0 @@
-{
-  "expectations": [
-    {
-      "text": "with_skill version recommends at least one recovery method or tool.",
-      "passed": true,
-      "evidence": "Lists Recuva, Disk Drill, PhotoRec, TestDisk as recovery tools."
-    }
-  ]
-}

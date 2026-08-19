@@ -1,9 +1,0 @@
-{
-  "expectations": [
-    {
-      "text": "with_skill version contains kaomoji or tone particles.",
-      "passed": true,
-      "evidence": "Contains /ω＼ and 喵 tone particle."
-    }
-  ]
-}

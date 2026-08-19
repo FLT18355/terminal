@@ -1,0 +1,59 @@
+{
+  "lastChangelogVersion": "0.84.2",
+  "theme": "catppuccin-tui-latte",
+  "packages": [
+    "npm:pi-bansos",
+    "npm:pi-catppuccin-tui",
+    "npm:pi-agent-beautify",
+    "npm:@smoose/pi-persona",
+    "npm:@d3ara1n/pi-provider-agnes",
+    "git:github.com/TheSethrose/pi-zai-provider",
+    "npm:@jc4649/pi-autocompact",
+    "npm:@jc4649/pi-toolcall-guard",
+    "npm:pi-agent-extensions",
+    "npm:@jc4649/pi-web-tools",
+    "npm:@rokiy/pi-ui",
+    "npm:omniroute-pi-ext-integration"
+  ],
+  "defaultProvider": "bansos",
+  "defaultModel": "deepseek-v4-flash-free",
+  "defaultThinkingLevel": "off",
+  "maxTokens": 16384,
+  "alps-pi": {
+    "chromeFrame": {
+      "enabled": true,
+      "assistantFrame": true,
+      "toolCompactMode": false,
+      "compactEditTool": false
+    },
+    "fixedBottomEditor": {
+      "enabled": true
+    },
+    "beautifiedInput": {
+      "enabled": true
+    },
+    "animations": {
+      "enabled": true,
+      "randomMode": false,
+      "working": "typewriter",
+      "thinking": "plasma-wave",
+      "tool": "pipeline",
+      "width": "default",
+      "fps": 16
+    },
+    "shortcuts": {
+      "stashEditor": "alt+s",
+      "copyEditor": "ctrl+alt+c",
+      "cutEditor": "ctrl+alt+x",
+      "scrollChatUp": "super+up",
+      "scrollChatDown": "super+down",
+      "editorStart": "super+shift+up",
+      "editorEnd": "super+shift+down",
+      "jumpPreviousUserMessage": "ctrl+shift+u",
+      "jumpNextUserMessage": "ctrl+shift+i",
+      "jumpPreviousAssistantMessage": "ctrl+alt+,",
+      "jumpNextAssistantMessage": "ctrl+alt+.",
+      "jumpChatBottom": "ctrl+shift+g"
+    }
+  }
+}

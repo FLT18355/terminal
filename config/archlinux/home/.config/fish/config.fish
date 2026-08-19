@@ -1,3 +1,4 @@
+test ! -e "$HOME/.x-cmd.root/local/data/fish/rc.fish" || source "$HOME/.x-cmd.root/local/data/fish/rc.fish" # boot up x-cmd.
 # ============================================
 # Fish 配置主入口 (v2.0)
 # 配置已拆分到 conf.d/ 和 functions/
