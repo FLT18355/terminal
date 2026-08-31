@@ -1,0 +1,6 @@
+setupVersion: 2
+theme:
+  dark: light-catppuccin
+  light: light-catppuccin
+modelRoles:
+  default: bansos/tencent/hy3:free:high
