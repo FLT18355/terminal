@@ -24,3 +24,10 @@
 - pick-ui-library — Have your agent pick the right library for the task based on libraries I use and trust, instead of letting AI hand-roll a toast component or install an abandoned package.
 - prototype — Build multiple different versions of a UI piece you describe and go through them using a switcher.
 - ask-sonner — Your guide to working with Sonner, my toast library. Contains setup, styling, recipes, and fixes for the most common issues.
+
+## Herdr Skills
+
+### Install(安装)
+使用*herdr*
+
+本Skill可以让AI通过Herdr来操控终端
